@@ -4,6 +4,7 @@ import "./App.css";
 import UserRegister from "./pages/User/UserRegister";
 
 import UserLogin from "./pages/User/UserLogin";
+import DashBoard from "./pages/Dashboard/DashBoard";
 
 const App = () => {
   const [isSignedIn, setIsSignedIn] = React.useState(
@@ -23,6 +24,11 @@ const App = () => {
     sessionStorage.setItem("isLoggedIn", "true");
   };
 
+  const signout = () => {
+    setIsSignedIn(false)
+    sessionStorage.setItem('isSignedIn', 'false')
+  }
+
   return (
     <div className="App">
       <Routes>
@@ -31,6 +37,11 @@ const App = () => {
         } />
         <Route path="/login" element = {
           <UserLogin signin = {signin} />
+        } />
+        <Route path="/dashboard" element={
+          // <Protected isSignedIn={isSignedIn}>
+            <DashBoard signin={signin} signout={signout} />
+          // </Protected>
         } />
       </Routes>
     </div>

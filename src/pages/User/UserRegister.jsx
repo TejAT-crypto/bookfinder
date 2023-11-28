@@ -15,7 +15,7 @@ const UserRegister = (props) => {
 
   const submit = async (data) => {
     axios
-      .post("http://10.1.72.9:3000/auth/login", data)
+      .post("http://172.20.10.2:3000/auth/register", data)
       .then((res) => {
         console.log(res);
         const tokenToSet = res.data ? res.data.token : "";
@@ -40,7 +40,7 @@ const UserRegister = (props) => {
           sessionStorage.setItem("newUser", true);
         } else {
           signin();
-          navigate("/dashboard");
+          navigate("/login");
           reset();
         }
       })

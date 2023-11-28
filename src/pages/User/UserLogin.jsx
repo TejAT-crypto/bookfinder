@@ -16,7 +16,7 @@ const UserLogin = (props) => {
 
   const submit = async (data) => {
     axios
-      .post("http://10.1.72.9:3000/auth/login", data)
+      .post("http://172.20.10.2:3000/auth/login", data)
       .then((res) => {
         console.log(res);
         const tokenToSet = res.data ? res.data.token : "";
@@ -46,7 +46,7 @@ const UserLogin = (props) => {
         }
       })
       .catch((err) => {
-        navigate("/");
+        navigate("/login");
       });
   };
 
