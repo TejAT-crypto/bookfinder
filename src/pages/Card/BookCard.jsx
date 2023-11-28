@@ -4,7 +4,7 @@ import React from 'react';
 
 const BookCard = ({ book }) => {
   return (
-    <div className="max-w-sm mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-md">
+    <div className="max-w-sm bg-white rounded-xl shadow-md overflow-hidden md:max-w-md">
       <img
         className="h-48 w-full object-cover md:h-64"
         src={book.imageUrl}
