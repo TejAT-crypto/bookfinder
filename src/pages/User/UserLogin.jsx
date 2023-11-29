@@ -7,12 +7,12 @@ import "../../App.css";
 
 
 
-const UserLogin = (props) => {
+const UserLogin = ({ socket }) => {
   const navigate = useNavigate();
   const { register, handleSubmit, reset } = useForm();
   const [userInfo, setUserInfo] = useState(false);
   const [uniqueID, setUniqueID] = useState("");
-  const signin = props.signin;
+  // const signin = props.signin;
 
   const submit = async (data) => {
     axios
@@ -35,12 +35,16 @@ const UserLogin = (props) => {
           res && res.data ? JSON.stringify(res.data.profile) : {}
         );
         setUniqueID(res && res.data ? res.data.uuid : "");
+
+        const userEmail = res.data ? res.data.profile.email : "";
+        socket.emit('newUser', { userEmail, socketID: socket.id });
+
         if (res.data.isNew) {
-          signin();
+          // signin();
           setUserInfo(true);
           sessionStorage.setItem("newUser", true);
         } else {
-          signin();
+          // signin();
           navigate("/dashboard");
           reset();
         }

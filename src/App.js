@@ -7,6 +7,9 @@ import UserLogin from "./pages/User/UserLogin";
 import DashBoard from "./pages/Dashboard/DashBoard";
 import Discussion from "./pages/Discussion/Discussion";
 import Chat from "./pages/Chat/Chat";
+import socketIO from 'socket.io-client';
+
+const socket = socketIO.connect('http://localhost:3000');
 
 const App = () => {
   const [isSignedIn, setIsSignedIn] = React.useState(
@@ -47,7 +50,7 @@ const App = () => {
         } />
         <Route path="/chat" element={
           // <Protected isSignedIn={isSignedIn}>
-            <Chat signin={signin} signout={signout} />
+            <Chat signin={signin} signout={signout} socket={socket} />
           // </Protected>
         } />
         <Route path="/discussion" element={
