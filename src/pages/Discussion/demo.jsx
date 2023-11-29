@@ -322,3 +322,17 @@ const Discussion: NextPage = () => {
 };
 
 export default Discussion;
+
+<div className="relative rounded-[20px] bg-darkslateblue w-full h-[227px] overflow-hidden text-left text-[28px] text-white font-cormorant-garamond">
+  <img
+    className="absolute top-[calc(50%_-_113.5px)] left-[calc(50%_-_113.5px)] rounded-[10px] w-[500px] h-[227px] object-cover"
+    alt=""
+    src="image 5.png"
+  />
+  <div className="absolute top-[165px] left-[22px] tracking-[-0.01em] leading-[16px] font-semibold">
+    This is the title
+  </div>
+  <div className="absolute top-[192px] left-[26px] text-[16px] tracking-[-0.01em] leading-[16px] font-semibold">
+    This is the subtitle
+  </div>
+</div>;
