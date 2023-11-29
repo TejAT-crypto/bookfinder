@@ -105,7 +105,10 @@ const UserLogin = (props) => {
                     Log In
                   </button>
                 </form>
-                
+                <div className="flex flex-row justify-center mt-3 text-xs md:text-base">
+                  <p className="text-white text-md">Don't have an Account?</p>
+                  <Link to="/" className="ml-2 text-[#AFD7FF] hover:underline text-md">Register</Link>
+                </div>                
               </div>
             </div>
           </div>

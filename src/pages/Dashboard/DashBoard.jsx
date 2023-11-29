@@ -59,11 +59,11 @@ const DashBoard = (props) => {
       <section className="relative h-screen bg-cover bg-center">
         <div className="flex flex-col">
           <div className="relative w-full flex flex-row mx-auto mb-10 lg:py-0 animate-slide-in-2 overflow-hidden">
-            <div className="relative flex-shrink-0 md:w-1/2">
-              <p className="font-light text-[4.5rem] p-4 ml-20 w-10/12 text-left">Connect, Share and Discuss</p>
-              <p className="text-[1.25rem] p-2 pl-6 pr-6 ml-20 w-10/12 text-left">"Book Buddy Finder" is a web-based application designed to connect book enthusiasts in their local area. It facilitates the exchange of books, building of friendships, and creation of discussions among the community of readers.</p>
+            <div className="relative md:w-1/2 flex flex-col items-center">
+              <p className="font-light text-[4.5rem] p-4 md:ml-20 w-10/12 text-left">Connect, Share and Discuss</p>
+              <p className="text-[1.25rem] p-2 pl-6 pr-6 md:ml-20 w-10/12 text-left">"Book Buddy Finder" is a web-based application designed to connect book enthusiasts in their local area. It facilitates the exchange of books, building of friendships, and creation of discussions among the community of readers.</p>
             </div>
-            <div className="relative flex-shrink-0 w-full md:w-1/2 overflow-hidden">
+            <div className="relative flex-shrink-0 md:w-1/2 overflow-hidden">
               <img
                 src={dashimg}
                 alt="Author"
