@@ -5,6 +5,8 @@ import UserRegister from "./pages/User/UserRegister";
 
 import UserLogin from "./pages/User/UserLogin";
 import DashBoard from "./pages/Dashboard/DashBoard";
+import Discussion from "./pages/Discussion/Discussion";
+import Chat from "./pages/Chat/Chat";
 
 const App = () => {
   const [isSignedIn, setIsSignedIn] = React.useState(
@@ -41,6 +43,16 @@ const App = () => {
         <Route path="/dashboard" element={
           // <Protected isSignedIn={isSignedIn}>
             <DashBoard signin={signin} signout={signout} />
+          // </Protected>
+        } />
+        <Route path="/chat" element={
+          // <Protected isSignedIn={isSignedIn}>
+            <Chat signin={signin} signout={signout} />
+          // </Protected>
+        } />
+        <Route path="/discussion" element={
+          // <Protected isSignedIn={isSignedIn}>
+            <Discussion signin={signin} signout={signout} />
           // </Protected>
         } />
       </Routes>

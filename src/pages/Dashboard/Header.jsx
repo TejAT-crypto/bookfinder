@@ -216,34 +216,32 @@ const Header = () => {
                         </button>
                     </div> */}
                     <div className="relative">
-  <input
-    type="text"
-    placeholder="Search"
-    className="pl-12 py-2 pr-10 bg-[#fff5e0] text-[#141E46] rounded-md border border-gray-300 focus:outline-none focus:border-[#141E46]"
-  />
-  <svg
-    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5 cursor-pointer"
-    fill="none"
-    stroke="currentColor"
-    viewBox="0 0 24 24"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth="2"
-      d="M21 21l-4.35-4.35"
-    />
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth="2"
-      d="M15 10C15 14.4183 11.4183 18 7 18C2.58172 18 0 14.4183 0 10C0 5.58172 2.58172 2 7 2C11.4183 2 15 5.58172 15 10Z"
-    />
-  </svg>
-</div>
-
-
+                        <input
+                            type="text"
+                            placeholder="Search"
+                            className="pl-12 py-2 pr-10 bg-[#fff5e0] text-[#141E46] rounded-md border border-gray-300 focus:outline-none focus:border-[#141E46]"
+                        />
+                        <svg
+                            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5 cursor-pointer"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M21 21l-4.35-4.35"
+                            />
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M15 10C15 14.4183 11.4183 18 7 18C2.58172 18 0 14.4183 0 10C0 5.58172 2.58172 2 7 2C11.4183 2 15 5.58172 15 10Z"
+                            />
+                        </svg>
+                    </div>
 
                     <Link to="/discussion">Discussion</Link>
                     <Link to="/chat">Chat</Link>
@@ -292,7 +290,6 @@ const Header = () => {
                     className="md:hidden bg-[#fff5e0] p-2 mt-2 transition-opacity duration-300 opacity-100 text-[#141E46]"
                     onAnimationEnd={() => {
                         if (!isMobileMenuOpen) {
-                            // Set opacity to 0 after animation when the menu is closed
                             setMobileMenuOpen(false);
                         }
                     }}
