@@ -12,10 +12,10 @@ const Header = () => {
     return (
         <header className="bg-[#fff5e0] text-[#141E46] p-4">
             <div className="container mx-auto flex justify-between items-center">
+            <div className="text-2xl font-bold">Logo</div>
+                <div className="hidden md:flex space-x-4 items-center">
                 <div className="flex items-center space-x-4">
                     {/* Logo */}
-                    <div className="flex-shrink-0 pr-36">
-                        Logo
                     </div>
 
                     {/* Search bar */}
@@ -30,7 +30,7 @@ const Header = () => {
                     </div>
 
                     {/* Navigation Links */}
-                    <Link to="/dashboard" className="px-5 pl-64 text-blue-500 hover:text-blue-700">Home</Link>
+                    <Link to="/dashboard" className="px-5 pl-10 text-blue-500 hover:text-blue-700">Home</Link>
                     <Link to="/discussion" className="px-5 text-blue-500 hover:text-blue-700">Discussion</Link>
                     <Link to="/chat" className="px-5 text-blue-500 hover:text-blue-700">Chat</Link>
                     <Link to="/activity" className="px-5 text-blue-500 hover:text-blue-700">Activity</Link>
@@ -39,9 +39,9 @@ const Header = () => {
                     <button className="ml-2 px-5">
                         <Link to="/profile">
                             <img
-                                src="path/to/profile-picture.jpg"
+                                src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                                 alt="Profile"
-                                className="rounded-full h-8 w-8"
+                                className="rounded-full h-12 w-12 object-cover"
                             />
                         </Link>
                     </button>

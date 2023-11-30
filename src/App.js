@@ -9,7 +9,7 @@ import Discussion from "./pages/Discussion/Discussion";
 import Chat from "./pages/Chat/Chat";
 import socketIO from 'socket.io-client';
 
-const socket = socketIO.connect('http://localhost:3000');
+const socket = socketIO.connect('http://172.20.10.6:3000');
 
 const App = () => {
   const [isSignedIn, setIsSignedIn] = React.useState(

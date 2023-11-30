@@ -29,7 +29,7 @@ const DashBoard = (props) => {
         console.log(tokenToSet);
         sessionStorage.setItem(
           "Token",
-          tokenToSet.substring(7, tokenToSet.length)
+          tokenToSet
         );
         sessionStorage.setItem("isLoggedIn", true);
         sessionStorage.setItem("role", res && res.data ? res.data.role : "");

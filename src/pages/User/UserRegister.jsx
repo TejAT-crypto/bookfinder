@@ -15,7 +15,7 @@ const UserRegister = (props) => {
 
   const submit = async (data) => {
     axios
-      .post("http://172.20.10.2:3000/auth/register", data)
+      .post("http://172.20.10.6:3000/auth/register", data)
       .then((res) => {
         console.log(res);
         const tokenToSet = res.data ? res.data.token : "";
@@ -25,7 +25,7 @@ const UserRegister = (props) => {
         console.log(tokenToSet);
         sessionStorage.setItem(
           "Token",
-          tokenToSet.substring(7, tokenToSet.length)
+          tokenToSet
         );
         sessionStorage.setItem("isLoggedIn", true);
         sessionStorage.setItem("role", res && res.data ? res.data.role : "");

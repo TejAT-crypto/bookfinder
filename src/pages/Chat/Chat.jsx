@@ -26,14 +26,18 @@ const Chat = ({ socket }) => {
 
   return (
     <>
-    <Header />
-    <div className="w-full h-screen flex items-center">
-      <Listings socket={socket} />
-      <div className="h-full flex-4/5">
-        <ChatWindow messages={messages} lastMessageRef={lastMessageRef} typingStatus={typingStatus} />
-        <ChatFooter socket={socket} />
+      <div className="flex flex-col h-screen">
+        <Header />
+        <div className="flex flex-1">
+          <Listings socket={socket} />
+
+          <div className="flex flex-col w-full">
+            <ChatWindow messages={messages} lastMessageRef={lastMessageRef} typingStatus={typingStatus} />
+            <ChatFooter socket={socket} />
+          </div>
+        </div>
       </div>
-    </div>
+
     </>
   );
 };

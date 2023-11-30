@@ -16,7 +16,7 @@ const UserLogin = ({ socket }) => {
 
   const submit = async (data) => {
     axios
-      .post("http://172.20.10.2:3000/auth/login", data)
+      .post("http://172.20.10.6:3000/auth/login", data)
       .then((res) => {
         console.log(res);
         const tokenToSet = res.data ? res.data.token : "";
@@ -26,28 +26,19 @@ const UserLogin = ({ socket }) => {
         console.log(tokenToSet);
         sessionStorage.setItem(
           "Token",
-          tokenToSet.substring(7, tokenToSet.length)
+          tokenToSet
         );
         sessionStorage.setItem("isLoggedIn", true);
-        sessionStorage.setItem("role", res && res.data ? res.data.role : "");
+        // sessionStorage.setItem("role", res && res.data ? res.data.role : "");
         sessionStorage.setItem(
-          "UserDetails",
-          res && res.data ? JSON.stringify(res.data.profile) : {}
+          "username",
+          res && res.data ? JSON.stringify(res.data.username) : {}
         );
-        setUniqueID(res && res.data ? res.data.uuid : "");
+        setUniqueID(res && res.data ? res.data._id : "");
 
-        const userEmail = res.data ? res.data.profile.email : "";
+        const userEmail = res.data ? res.data.email : "";
         socket.emit('newUser', { userEmail, socketID: socket.id });
-
-        if (res.data.isNew) {
-          // signin();
-          setUserInfo(true);
-          sessionStorage.setItem("newUser", true);
-        } else {
-          // signin();
-          navigate("/dashboard");
-          reset();
-        }
+      
       })
       .catch((err) => {
         navigate("/login");
