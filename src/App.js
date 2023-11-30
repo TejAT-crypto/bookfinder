@@ -6,6 +6,7 @@ import UserRegister from "./pages/User/UserRegister";
 import UserLogin from "./pages/User/UserLogin";
 import DashBoard from "./pages/Dashboard/DashBoard";
 import Discussion from "./pages/Discussion/Discussion";
+import Profile from "./pages/Profile/Profile";
 import Chat from "./pages/Chat/Chat";
 import socketIO from 'socket.io-client';
 
@@ -56,6 +57,11 @@ const App = () => {
         <Route path="/discussion" element={
           // <Protected isSignedIn={isSignedIn}>
             <Discussion signin={signin} signout={signout} />
+          // </Protected>
+        } />
+        <Route path="/profile" element={
+          // <Protected isSignedIn={isSignedIn}>
+            <Profile signin={signin} signout={signout} />
           // </Protected>
         } />
       </Routes>

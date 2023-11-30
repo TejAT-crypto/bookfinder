@@ -13,7 +13,7 @@ const Discussion = () => {
   return (
     <>
       <Header />
-      <div className="overflow-hidden flex flex-row">
+      <div className="overflow-hidden flex flex-row min-h-screen">
         <div className="flex w-1/5 bg-gray-200 h-full justify-center">
           <div className="flex flex-col w-full">
             <div className="grid m-4 mt-8 justify-center">
@@ -95,7 +95,8 @@ const Discussion = () => {
           </div>
           <div className="flex flex-col text-white m-4 mr-4 rounded-md h-fit space-y-8">
             <DiscussionCard />
-            <DiscussionCard />
+            {/* <DiscussionCard />
+            <DiscussionCard /> */}
           </div>
         </div>
       </div>
