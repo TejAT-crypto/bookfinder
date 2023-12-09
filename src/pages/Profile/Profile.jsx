@@ -7,22 +7,32 @@ import { Link } from 'react-router-dom';
 
 const Profile = () => {
   const [profile, setProfile] = useState([]);
+  const [location, setLocation] = useState(null);
 
   const reverseGeocoding = async (latitude, longitude) => {
-    const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
-  
-    try {
-      const response = await axios.get(url);
-      return response.data.address.city || response.data.address.town;
-    } catch (error) {
-      console.error('Error in reverse geocoding:', error);
-      return null;
+   
+    const response = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=fafc6e5828c742fba047a65f1007f52d`);
+    const data = await response.json();
+    const results = data.results;
+
+    if (results[0]) {
+      setLocation(results[0].formatted);
+      // const addressComponents = results[0].address_components;
+      // for (let i = 0; i < addressComponents.length; i++) {
+      //   if (addressComponents[i].types.includes('locality')) {
+      //     console.log(addressComponents[i].long_name);
+      //     return addressComponents[i].long_name;
+      //   }
+      // }
     }
+    
+
+    throw new Error('Could not find city name');
   };
 
   const fetchUserDetails = async () => {
     try {
-      const response = await axios.get('http://192.168.1.5:3000/profile/user', {
+      const response = await axios.get('http://10.1.123.86:3000/profile/user', {
         headers: {
           'auth-token': sessionStorage.getItem('Token')
         }
@@ -33,7 +43,7 @@ const Profile = () => {
     }
   };
 
-  const getLocation = () => {
+  const getLocation = async () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         async (position) => {
@@ -43,18 +53,21 @@ const Profile = () => {
               coordinates: [position.coords.longitude, position.coords.latitude]
             },
           };
-  
+
           try {
-            const response = await axios.put('http://192.168.1.5:3000/profile/location', geoJson, {
+            const response = await axios.put('http://10.1.123.86:3000/profile/location', geoJson, {
               headers: {
                 'auth-token': sessionStorage.getItem('Token')
               }
             });
-            // const cityName = await reverseGeocoding(position.coords.latitude, position.coords.longitude);
-            // console.log("User's city:", cityName);
-            // setProfile(response.data)
-            // console.log('GeoJSON sent:', response.data);
-            
+            const reverseGeoData = await reverseGeocoding(position.coords.latitude, position.coords.longitude);
+
+            if (reverseGeoData && reverseGeoData.results.length > 0) {
+              const formattedAddress = reverseGeoData.results[0].formatted;
+              console.log("Formatted address:", formattedAddress);
+            }
+            console.log('GeoJSON sent:', response.data);
+
           } catch (error) {
             console.error('Error sending GeoJSON:', error);
           }
@@ -69,11 +82,10 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    getLocation();
     fetchUserDetails();
   }, []);
-  
-  
+
+
 
 
   return (
@@ -103,7 +115,13 @@ const Profile = () => {
                 </div>
                 <div className="flex flex-row justify-left space-x-2">
                   <p className="font-bold text-xl">Address:</p>
-                  <p className="text-xl font-light">{profile.location.coordinates}</p>
+                  <p className="text-xl font-light">{location ? <p>{location}</p> : <p>Loading...</p>}</p>
+                  {/* <p className="text-xl font-light">1234</p> */}
+
+                  <button className="rounded-lg bg-[#141E46] text-white font-bold text-md justify-center p-1.5" onClick={getLocation}>
+                    Change Location
+                  </button>
+
                 </div>
                 <div className="flex flex-row justify-left space-x-2">
                   <p className="font-bold text-xl">Books for Lend:</p>

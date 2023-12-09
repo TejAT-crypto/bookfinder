@@ -5,17 +5,18 @@ import ChatWindow from './ChatWindow';
 const Listings = ({ socket }) => {
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
-  const [chats, setChats] = useState({});
+  const [chats, setChats] = useState([]);
 
   // Fetch user listings
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get('http://192.168.1.5:3000/chat/', {
+        const response = await axios.get('http://10.1.123.86:3000/chat/', {
           headers: {
             'auth-token': sessionStorage.getItem('Token')
           }
         });
+        console.log("users:", response.data)
         setUsers(response.data);
       } catch (error) {
         console.error('Error fetching users:', error);
@@ -27,9 +28,13 @@ const Listings = ({ socket }) => {
 
   // Handle user selection
   const handleUserClick = async (userId) => {
-    setSelectedUser(userId);
+    console.log("user id: ", userId)
+    console.log("users ids: ", userId.users[1])
+
+    setSelectedUser(userId.users[1]);
+    console.log("user selected", selectedUser);
     try {
-      const response = await axios.get(`http://192.168.1.5:3000/chat/messages/${userId}`, {
+      const response = await axios.get(`http://10.1.123.86:3000/chat/messages`, {
         headers: { 'auth-token': sessionStorage.getItem('Token') }
       });
       setChats({
@@ -45,20 +50,17 @@ const Listings = ({ socket }) => {
   // WebSocket logic to update chats
   useEffect(() => {
     if (socket) {
-      socket.on('chat message', (newMessage) => {
-        setChats(prevChats => ({
-          ...prevChats,
-          [newMessage.chatId]: [...(prevChats[newMessage.chatId] || []), newMessage]
-        }));
-      });
+     socket.on('chat message', (newMessage) => {
+       setChats((prevMessages) => [...prevMessages, newMessage]);
+     });
+   
+     return () => {
+       socket.off('chat message');
+     };
     }
+   }, [socket]);
 
-    return () => {
-      if (socket) {
-        socket.off('chat message');
-      }
-    };
-  }, [socket, chats]);
+   console.log(users);
 
   return (
     <div className={`h-full bg-[#FFF5E0] flex-1/5} pb-20 pl-20 pr-20 pt-5 border-t border-black`}>
@@ -82,14 +84,14 @@ const Listings = ({ socket }) => {
               ))} */}
               {/* <p>Total Users Talked: {totalUsersTalked}</p> */}
               {users.map((user) => (
-                <button key={user.socketID} onClick={() => handleUserClick(user)}>
+                <button key={user} onClick={() => handleUserClick(user)}>
                   {user.users}
                 </button>
               ))}
       {selectedUser && (
         <ChatWindow
           selectedUser={selectedUser}
-          messages={chats[selectedUser] || []}
+          messages={chats[selectedUser]}
         />
       )}
     </div>
@@ -112,7 +114,7 @@ const Listings = ({ socket }) => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get('http://192.168.1.5:3000/chat/', {
+        const response = await axios.get('http://10.1.123.86:3000/chat/', {
           headers: {
             'auth-token': sessionStorage.getItem('Token')
           }
@@ -130,7 +132,7 @@ const Listings = ({ socket }) => {
   const handleUserClick = async (userId) => {
     setSelectedUser(userId);
     try {
-      const response = await axios.get(`http://192.168.1.5:3000/chat/messages/${userId}`, {
+      const response = await axios.get(`http://10.1.123.86:3000/chat/messages/${userId}`, {
         headers: { 'auth-token': sessionStorage.getItem('Token') }
       });
       setChats({
@@ -198,7 +200,7 @@ const Listings = ({ socket }) => {
 
 //   const fetchUserListing = async () => {
 //     try {
-//       const response = await axios.get('http://192.168.1.5:3000/chat/', {
+//       const response = await axios.get('http://10.1.123.86:3000/chat/', {
 //         headers: {
 //           "auth-token": sessionStorage.getItem('Token')
 //         }
