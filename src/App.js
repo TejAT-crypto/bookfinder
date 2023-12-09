@@ -8,9 +8,10 @@ import DashBoard from "./pages/Dashboard/DashBoard";
 import Discussion from "./pages/Discussion/Discussion";
 import Profile from "./pages/Profile/Profile";
 import Chat from "./pages/Chat/Chat";
-import socketIO from 'socket.io-client';
+import Activity from "./pages/Activity/Activity";
+import socketIO from "socket.io-client";
 
-const socket = socketIO.connect('http://172.20.10.6:3000');
+const socket = socketIO.connect("http://172.20.10.6:3000");
 
 const App = () => {
   const [isSignedIn, setIsSignedIn] = React.useState(
@@ -31,39 +32,55 @@ const App = () => {
   };
 
   const signout = () => {
-    setIsSignedIn(false)
-    sessionStorage.setItem('isSignedIn', 'false')
-  }
+    setIsSignedIn(false);
+    sessionStorage.setItem("isSignedIn", "false");
+  };
 
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element = {
-          <UserRegister signin = {signin} />
-        } />
-        <Route path="/login" element = {
-          <UserLogin signin = {signin} />
-        } />
-        <Route path="/dashboard" element={
-          // <Protected isSignedIn={isSignedIn}>
+        <Route path="/" element={<UserRegister signin={signin} />} />
+        <Route path="/login" element={<UserLogin signin={signin} />} />
+        <Route
+          path="/dashboard"
+          element={
+            // <Protected isSignedIn={isSignedIn}>
             <DashBoard signin={signin} signout={signout} />
-          // </Protected>
-        } />
-        <Route path="/chat" element={
-          // <Protected isSignedIn={isSignedIn}>
+            // </Protected>
+          }
+        />
+        <Route
+          path="/chat"
+          element={
+            // <Protected isSignedIn={isSignedIn}>
             <Chat signin={signin} signout={signout} socket={socket} />
-          // </Protected>
-        } />
-        <Route path="/discussion" element={
-          // <Protected isSignedIn={isSignedIn}>
+            // </Protected>
+          }
+        />
+        <Route
+          path="/discussion"
+          element={
+            // <Protected isSignedIn={isSignedIn}>
             <Discussion signin={signin} signout={signout} />
-          // </Protected>
-        } />
-        <Route path="/profile" element={
-          // <Protected isSignedIn={isSignedIn}>
+            // </Protected>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            // <Protected isSignedIn={isSignedIn}>
             <Profile signin={signin} signout={signout} />
-          // </Protected>
-        } />
+            // </Protected>
+          }
+        />
+        <Route
+          path="/activity"
+          element={
+            // <Protected isSignedIn={isSignedIn}>
+            <Activity signin={signin} signout={signout} />
+            // </Protected>
+          }
+        />
       </Routes>
     </div>
   );
