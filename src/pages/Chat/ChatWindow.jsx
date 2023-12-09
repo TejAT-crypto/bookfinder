@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const ChatWindow = ({ messages, lastMessageRef, typingStatus }) => {
+const ChatWindow = ({ selectedUser, messages, lastMessageRef, typingStatus }) => {
   const navigate = useNavigate();
 
   const handleLeaveChat = () => {
@@ -9,6 +9,8 @@ const ChatWindow = ({ messages, lastMessageRef, typingStatus }) => {
     navigate('/dashboard');
     window.location.reload();
   };
+
+  console.log("Chat Messages:", messages);
 
   return (
     <>

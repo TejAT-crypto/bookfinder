@@ -16,7 +16,7 @@ const UserLogin = ({ socket }) => {
 
   const submit = async (data) => {
     axios
-      .post("http://172.20.10.6:3000/auth/login", data)
+      .post("http://192.168.1.5:3000/auth/login", data)
       .then((res) => {
         console.log(res);
         const tokenToSet = res.data ? res.data.token : "";
@@ -37,7 +37,19 @@ const UserLogin = ({ socket }) => {
         setUniqueID(res && res.data ? res.data._id : "");
 
         const userEmail = res.data ? res.data.email : "";
-        socket.emit('newUser', { userEmail, socketID: socket.id });
+        console.log(res.status)
+        if(res.status === 200){
+          navigate("/dashboard")
+          try {
+            socket.emit("newUser", { userEmail, socketID: socket.id });
+          } catch (error) {
+            console.error("Error emitting socket event:", error);
+          }
+        }
+        // socket.emit('newUser', { userEmail, socketID: socket.id });
+
+
+        // Check if the response status is 200 and then navigate to /dashboard
       
       })
       .catch((err) => {
