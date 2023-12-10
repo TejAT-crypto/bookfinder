@@ -141,40 +141,56 @@ const BookForm = () => {
 //     setFile(selectedFile);
 //   };
 
+// const handleFileChange = (e) => {
+//     const selectedFile = e.target.files[0];
+
+//     if (selectedFile) {
+//       resizeImage(selectedFile)
+//         .then((resizedImage) => {
+//           setFormData((prevData) => ({
+//             ...prevData,
+//             image: resizedImage,
+//           }));
+//         })
+//         .catch((error) => {
+//           console.error("Error resizing image:", error);
+//         });
+//     }
+
+//     setFile(selectedFile);
+//   };
+
 const handleFileChange = (e) => {
-    const selectedFile = e.target.files[0];
+  const selectedFile = e.target.files[0];
 
-    if (selectedFile) {
-      resizeImage(selectedFile)
-        .then((resizedImage) => {
-          setFormData((prevData) => ({
-            ...prevData,
-            image: resizedImage,
-          }));
-        })
-        .catch((error) => {
-          console.error("Error resizing image:", error);
-        });
-    }
+  if (selectedFile) {
+    setFormData((prevData) => ({
+      ...prevData,
+      image: selectedFile,
+    }));
+  }
 
-    setFile(selectedFile);
-  };
+  setFile(selectedFile);
+};
 
+
+  console.log(file)
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       // Convert the file to Base64
-      const base64String = await convertFileToBase64(file);
+      // const base64String = await convertFileToBase64(file);
 
       console.log(formData)
       // Post form data to /book/add along with the base64 string
       const response = await axios.post("http://10.1.124.13:3000/book/add", {
         ...formData,
-        image: base64String,
+        image: file,
       }, {
               headers: {
-                'auth-token': sessionStorage.getItem('Token')
+                'auth-token': sessionStorage.getItem('Token'),
+                'Content-Type': 'multipart/form-data',
               }
             });
 
@@ -225,23 +241,23 @@ const handleFileChange = (e) => {
 
 
   // Helper function to convert file to Base64
-  const convertFileToBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      if (!file) {
-        reject("No file selected");
-        return;
-      }
+  // const convertFileToBase64 = (file) => {
+  //   return new Promise((resolve, reject) => {
+  //     if (!file) {
+  //       reject("No file selected");
+  //       return;
+  //     }
 
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        resolve(reader.result.split(",")[1]); // Extract base64 string
-      };
-      reader.onerror = (error) => {
-        reject(error);
-      };
-    });
-  };
+  //     const reader = new FileReader();
+  //     reader.readAsDataURL(file);
+  //     reader.onload = () => {
+  //       resolve(reader.result.split(",")[1]); // Extract base64 string
+  //     };
+  //     reader.onerror = (error) => {
+  //       reject(error);
+  //     };
+  //   });
+  // };
 
   return (
     <div className="bg-[#FFF5E0] min-h-screen flex items-center justify-center">

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { MdOutlineSearch } from "react-icons/md";
 
-const Header = ({ onSearch }) => {
+const Header = ({ onSearch, profilePhoto }) => {
     const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     const toggleMobileMenu = () => {
@@ -63,7 +63,7 @@ const Header = ({ onSearch }) => {
             <button className="ml-2 px-5">
               <Link to="/profile">
                 <img
-                  src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                  src={profilePhoto}
                   alt="Profile"
                   className="rounded-full h-12 w-12 object-cover"
                 />

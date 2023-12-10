@@ -1,6 +1,6 @@
 import { MdStar, MdStarBorder, MdStarHalf } from "react-icons/md";
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Header from '../Dashboard/Header';
 import axios from 'axios';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
@@ -9,21 +9,20 @@ const Profile = () => {
   const [profile, setProfile] = useState([]);
   const [location, setLocation] = useState(null);
   const navigate = useNavigate();
+  const fileInputRef = useRef(null);
 
-  const [profilePhoto, setProfilePhoto] = useState(
-    "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-  );
+  const [profilePhoto, setProfilePhoto] = useState("");
+  // https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setProfilePhoto(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
+  // const handleFileChange = (e) => {
+  //   navigate('/editProfile')
+  // };
+
+  const handleClick = () => {
+    // Trigger the file input when the image is clicked
+    navigate('/editProfile')
   };
+
 
   const reverseGeocoding = async (latitude, longitude) => {
     const response = await fetch(
@@ -65,11 +64,17 @@ const Profile = () => {
           'auth-token': sessionStorage.getItem('Token')
         }
       });
-      setProfile(response.data);
+      console.log(response.data);
+      setProfile(response.data.user);
+      setProfilePhoto(response.data.image);
+      
+
     } catch (err) {
       console.log(err);
     }
   };
+  console.log(profile)
+  console.log(profilePhoto)
 
   const getLocation = async () => {
     if (navigator.geolocation) {
@@ -118,24 +123,21 @@ const Profile = () => {
     fetchUserDetails();
   }, []);
 
+
   return (
     <>
-      <Header />
+      <Header profilePhoto={
+        profilePhoto
+      } />
       <div className="bg-[#FFF5E0] flex flex-row pt-4 min-h-screen">
         <div className="w-1/3">
           <div className="flex flex-col">
-            <img
-              src={profilePhoto}
-              alt="Author"
-              className="w-48 h-48 object-cover rounded-full mx-auto cursor-pointer"
-            />
-            <input
-              type="file"
-              id="profile-photo-input"
-              accept="image/*"
-              style={{ display: "none" }}
-              onChange={handleFileChange}
-            />
+              <img
+                src={`data:image/png;base64,${profilePhoto}`} 
+                alt="Author"
+                className="w-48 h-48 object-cover rounded-full mx-auto cursor-pointer transition-all transform hover:scale-105 border-4 border-white"
+                onClick={handleClick}
+              />
             <div className="flex flex-row m-4 justify-center text-2xl text-yellow-400">
               <MdStar />
               <MdStar />
@@ -178,7 +180,7 @@ const Profile = () => {
                 </div>
               </div>
               <button className="flex flex-row rounded-xl bg-[#141E46] text-white font-bold text-xl justify-center p-3 mt-8" onClick={() => {
-                navigate("/editProfile");
+                // navigate("/editProfile");
               }}>
                 Edit Profile
               </button>
