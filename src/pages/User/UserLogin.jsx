@@ -5,8 +5,6 @@ import axios from "axios";
 import img from "../../assets/image_1.png";
 import "../../App.css";
 
-
-
 const UserLogin = ({ socket }) => {
   const navigate = useNavigate();
   const { register, handleSubmit, reset } = useForm();
@@ -16,7 +14,7 @@ const UserLogin = ({ socket }) => {
 
   const submit = async (data) => {
     axios
-      .post("https://se-project-backend-bbf.onrender.com/auth/login", data)
+      .post(" http://192.168.137.54:3000/auth/login", data)
       .then((res) => {
         console.log(res);
         const tokenToSet = res.data ? res.data.token : "";
@@ -24,23 +22,20 @@ const UserLogin = ({ socket }) => {
           return;
         }
         console.log(tokenToSet);
-        sessionStorage.setItem(
-          "Token",
-          tokenToSet
-        );
+        sessionStorage.setItem("Token", tokenToSet);
         sessionStorage.setItem("isLoggedIn", true);
         // sessionStorage.setItem("role", res && res.data ? res.data.role : "");
         sessionStorage.setItem(
           "username",
           res && res.data ? res.data.username : {}
         );
-        sessionStorage.setItem("userId", res && res.data ? res.data._id : "")
+        sessionStorage.setItem("userId", res && res.data ? res.data._id : "");
         setUniqueID(res && res.data ? res.data._id : "");
 
         const userEmail = res.data ? res.data.email : "";
-        console.log(res.status)
-        if(res.status === 200){
-          navigate("/dashboard")
+        console.log(res.status);
+        if (res.status === 200) {
+          navigate("/dashboard");
           try {
             socket.emit("newUser", { userEmail, socketID: socket.id });
           } catch (error) {
@@ -49,9 +44,7 @@ const UserLogin = ({ socket }) => {
         }
         // socket.emit('newUser', { userEmail, socketID: socket.id });
 
-
         // Check if the response status is 200 and then navigate to /dashboard
-      
       })
       .catch((err) => {
         navigate("/login");
@@ -83,8 +76,8 @@ const UserLogin = ({ socket }) => {
                 <form
                   className="space-y-4 lg:space-y-6"
                   onSubmit={handleSubmit(submit)}
-                > 
-                  <div className='pt-1.5'>
+                >
+                  <div className="pt-1.5">
                     <input
                       type="text"
                       name="email"
@@ -95,7 +88,7 @@ const UserLogin = ({ socket }) => {
                       required
                     />
                   </div>
-                  <div className='pt-1.5 pb-2.5'>
+                  <div className="pt-1.5 pb-2.5">
                     <input
                       type="password"
                       name="password"
@@ -115,8 +108,13 @@ const UserLogin = ({ socket }) => {
                 </form>
                 <div className="flex flex-row justify-center mt-3 text-xs md:text-base">
                   <p className="text-white text-md">Don't have an Account?</p>
-                  <Link to="/" className="ml-2 text-[#AFD7FF] hover:underline text-md">Register</Link>
-                </div>                
+                  <Link
+                    to="/"
+                    className="ml-2 text-[#AFD7FF] hover:underline text-md"
+                  >
+                    Register
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
