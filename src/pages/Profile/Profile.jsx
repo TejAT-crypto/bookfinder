@@ -10,6 +10,7 @@ const Profile = () => {
   const [location, setLocation] = useState(null);
   const [Loading, setLoading] = useState(false);
   const [books, setBooks] = useState([]);
+  const [activity, setActivity] = useState([]);
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
 
@@ -97,6 +98,25 @@ const Profile = () => {
       console.log(err);
     }
   };
+
+  const fetchUserActivity = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get(
+        "http://192.168.1.12:3000/book/activity",
+        {
+          headers: {
+            "auth-token": sessionStorage.getItem("Token"),
+          },
+        }
+      );
+      setActivity(response.data);
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      console.log(err);
+    }
+  };
   console.log("books are: ", books);
 
   const getLocation = async () => {
@@ -150,6 +170,7 @@ const Profile = () => {
     () => {
       fetchUserDetails();
       fetchUserBooks();
+      fetchUserActivity();
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
@@ -225,6 +246,16 @@ const Profile = () => {
 
             <div className="bg-white rounded-lg mb-4 mr-4 mt-2 ml-8">
               <div className="flex flex-col justify-left text-left space-y-4 m-4 underline">
+              {!Loading ? (
+                    activity.map((act) => (
+                      <div>
+                        
+                      </div>
+                    ))
+                  ) : (
+                    <p>Loading...</p>
+                  )}
+                  
                 {/* <p>Transaction 1</p>
                 <p>Transaction 2</p>
                 <p>Transaction 3</p>

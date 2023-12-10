@@ -1,12 +1,14 @@
-// card.jsx
-
 import React, { useState, useEffect } from "react";
 import StarRating from "./ratings";
 import axios from "axios";
 import { MdLocationOn, MdBookmarkBorder } from "react-icons/md";
 
-const BookCard = ({ book }) => {
+const BookCard = ({ book,bookIds }) => {
   const [address, setAddress] = useState("");
+  const [status, setStatus] = useState('available');
+
+  console.log("Book Id: ", book._id);
+  console.log("Book Ids: ", bookIds);
 
   const requestBook = async () => {
     try {
@@ -22,11 +24,43 @@ const BookCard = ({ book }) => {
           },
         }
       );
+      setStatus(response.data.status);
       console.log(response.data);
+      console.log(status);
     } catch (err) {
       console.log(err);
     }
   };
+
+  // const getBookStatus = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       "http://192.168.1.12:3000/chat/allChatRequests",
+  //       {
+  //         headers: {
+  //           "auth-token": sessionStorage.getItem("Token"),
+  //         },
+  //       }
+  //     );
+  //     console.log("Response data: ",response.data);
+  //     const unique = response.data.filter(
+  //       (v, i, a) => a.findIndex((t) => t.bookId._id === v.bookId._id) === i
+  //     );
+  //     const bookIds = unique.map((book) => book.bookId._id);
+  //     console.log("Book Ids: ",bookIds);
+  //     console.log("Unique: ",unique);
+  //     setStatus(response.data);
+  //     console.log(status)
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   getBookStatus();
+  // },[])
+
+
 
   useEffect(() => {
     const reverseGeocode = async () => {
@@ -79,12 +113,22 @@ const BookCard = ({ book }) => {
         </div>
 
         <div className="flex items-center justify-center px-4 py-4 bg-[#FFF5E0]">
-          <button
+        {
+          bookIds && bookIds.find((id) => id === book._id) ? (
+            <button
+            className="bg-gray-500 bg-opacity-80 text-white px-12 py-2 rounded-md disable"
+          >
+            Pending
+          </button>
+          ) : (
+            <button
             className="bg-[#C70039] bg-opacity-80 text-white px-12 py-2 rounded-md"
             onClick={() => requestBook()}
           >
             Get a Book
           </button>
+          )
+        }
           <button className="text-[#C70039] text-opacity-80 py-2 px-2 rounded-lg text-3xl ml-6 border shadow">
             <MdBookmarkBorder />
           </button>

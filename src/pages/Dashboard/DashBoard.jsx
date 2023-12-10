@@ -90,6 +90,7 @@ import BookCard from "../Card/BookCard";
 
 const DashBoard = (props) => {
   const [books, setBooks] = useState([]);
+  const [bookIds, setBookIds] = useState([]);
 
   const getBooks = async () => {
     try {
@@ -130,8 +131,32 @@ const DashBoard = (props) => {
     }
   };
 
+  const getBookStatus = async () => {
+    try {
+      const response = await axios.get(
+        "http://192.168.1.12:3000/chat/allChatRequests",
+        {
+          headers: {
+            "auth-token": sessionStorage.getItem("Token"),
+          },
+        }
+      );
+      console.log("Response data: ",response.data);
+      const unique = response.data.filter(
+        (v, i, a) => a.findIndex((t) => t.bookId._id === v.bookId._id) === i
+      );
+      const bookids = unique.map((book) => book.bookId._id);
+      setBookIds(bookids);
+      console.log("Book ids: ",bookids);
+      console.log("Unique: ",unique);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  
   useEffect(() => {
     getBooks();
+    getBookStatus();
   }, []);
 
   useEffect(() => {
@@ -193,11 +218,11 @@ const DashBoard = (props) => {
                   key={index}
                   className="w-1/3 sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/4 mb-4"
                 >
-                  <BookCard book={book} />
+                  <BookCard book={book} bookIds={bookIds} />
                 </div>
               ))
             ) : books.length === 0 ? (
-              <p>No results found.</p>
+              <p>Loading...</p>
             ) : (
               <p>Loading...</p>
             )}
