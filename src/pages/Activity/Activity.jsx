@@ -1,13 +1,35 @@
-import { React, useState } from "react";
+import { React, useEffect, useState } from "react";
 import Header from "../Dashboard/Header";
 import bookImage from "../../assets/cover.png";
+import axios from "axios";
 
 const Activity = () => {
   const [isListOpen, setListOpen] = useState(false);
+  const [activity, setActivity] = useState([]);
 
   const toggleList = () => {
     setListOpen(!isListOpen);
   };
+
+  const fetchActivity = async () => {
+    try {
+      const response = await axios.get(
+        "http://192.168.1.12:3000/chat/allChatRequests",
+        {
+          headers: {
+            "auth-token": sessionStorage.getItem("Token"),
+          },
+        }
+      );
+      console.log("data: ", response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchActivity();
+  }, []);
 
   return (
     <>
@@ -30,7 +52,45 @@ const Activity = () => {
               Requested Books for Lend
             </h1>
             <div className="bg-[#FFF5E0] h-full w-full">
-              <div className="flex flex-row">
+              
+              {activity.map((book) => (
+                <div className="flex flex-row">
+                  <div className="flex m-4 ml-8 w-auto justify-items-start">
+                    <img
+                      className="h-20 w-20 object-cover rounded-md"
+                      src={bookImage}
+                      alt="book"
+                    />
+                  </div>
+                  <div className="flex flex-1 flex-col justify-center items-baseline">
+                    <div className="font-medium text-2xl">
+                      {book.title}
+                    </div>
+                    <div>{book.author}</div>
+                  </div>
+                  <div className="flex items-center m-4 space-x-4">
+                    <button
+                      type="button"
+                      onClick={toggleList}
+                      className="bg-[#141e46] text-white rounded-md p-3 px-5 font-medium"
+                    >
+                      View
+                    </button>
+
+                    
+                    {isListOpen && (
+                      <button
+                        type="button"
+                        onClick={toggleList}
+                        className="bg-[#c70039] text-white rounded-md p-3 px-5 font-medium"
+                      >
+                        Decline all
+                      </button>
+                    )}
+                  </div>
+                </div>
+              ))}
+              {/* <div className="flex flex-row">
                 <div className="flex m-4 ml-8 w-auto justify-items-start">
                   <img
                     className="h-20 w-20 object-cover rounded-md"
@@ -62,7 +122,7 @@ const Activity = () => {
                     </button>
                   )}
                 </div>
-              </div>
+              </div> */}
             </div>
             {isListOpen && (
               <div className="flex flex-row justify-items-start ml-10 bg-[#ececec]">
