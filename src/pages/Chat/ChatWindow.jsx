@@ -1,14 +1,43 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const ChatWindow = ({ socket, selectedUser, messages }) => {
  const navigate = useNavigate();
  const [chatMessages, setChatMessages] = useState(messages);
+ const [chats, setChats] = useState([])
+
+ console.log(selectedUser)
+
+ useEffect(() => {
+    if (selectedUser) {
+      const fetchData = async () => {
+        try {
+          const chatId = selectedUser.chatId;
+          const response = await axios.get(`https://se-project-backend-bbf.onrender.com/chat/messages/${chatId}`, {
+            headers: {
+              'auth-token': sessionStorage.getItem('Token')
+            }
+          });
+  
+          // Check if response.data[0]?.messages is defined and iterable
+          console.log(response.data)
+          setChats(response.data);
+          console.log(chats)
+  
+        } catch (error) {
+          console.error('Error fetching chat history:', error);
+        }
+      };
+  
+      fetchData();
+    }
+  }, [selectedUser]);
 
  useEffect(() => {
  if (socket) {
    socket.on('chat message', (newMessage) => {
-     setChatMessages((prevMessages) => [...prevMessages, newMessage]);
+     setChats((prevMessages) => [...prevMessages, newMessage]);
    });
 
    return () => {
@@ -17,29 +46,30 @@ const ChatWindow = ({ socket, selectedUser, messages }) => {
  }
 }, [socket]);
 
- const handleLeaveChat = () => {
-   localStorage.removeItem('userName');
-   navigate('/dashboard');
-   window.location.reload();
- };
 
- console.log("messages", chatMessages);
+// console.log("messages", chatMessages);
+const handleLeaveChat = () => {
+  localStorage.removeItem('userName');
+  navigate('/dashboard');
+  window.location.reload();
+};
 
  return (
    <>
      <div className="w-full h-full bg-[#FFF5E0] p-20 overflow-hidden border border-black">
-       {chatMessages.map((message) =>
+       {chats.map((message) =>
          message.name === sessionStorage.getItem('username') ? (
            <div className="text-sm" key={message.id}>
+           <p>{message.username}</p>
              <div className="bg-green-300 max-w-300 p-10 rounded-md ml-auto text-base">
-               <p>{message.text}</p>
+               <p>{message.message}</p>
              </div>
            </div>
          ) : (
            <div className="text-sm" key={message.id}>
-             <p>{message.name}</p>
+             <p>{message.username}</p>
              <div className="bg-red-200 w-300 p-10 rounded-md text-base">
-               <p>{message.text}</p>
+               <p>{message.message}</p>
              </div>
            </div>
          )

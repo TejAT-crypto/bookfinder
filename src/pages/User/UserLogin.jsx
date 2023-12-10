@@ -16,7 +16,7 @@ const UserLogin = ({ socket }) => {
 
   const submit = async (data) => {
     axios
-      .post("http://10.1.123.86:3000/auth/login", data)
+      .post("https://se-project-backend-bbf.onrender.com/auth/login", data)
       .then((res) => {
         console.log(res);
         const tokenToSet = res.data ? res.data.token : "";

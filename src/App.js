@@ -11,7 +11,7 @@ import Chat from "./pages/Chat/Chat";
 import Activity from "./pages/Activity/Activity";
 import socketIO from "socket.io-client";
 
-const socket = socketIO.connect('http://10.1.123.86:3000');
+const socket = socketIO.connect('https://se-project-backend-bbf.onrender.com');
 
 const App = () => {
   const [isSignedIn, setIsSignedIn] = React.useState(

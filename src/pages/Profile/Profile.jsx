@@ -32,7 +32,7 @@ const Profile = () => {
 
   const fetchUserDetails = async () => {
     try {
-      const response = await axios.get('http://10.1.123.86:3000/profile/user', {
+      const response = await axios.get('https://se-project-backend-bbf.onrender.com/profile/user', {
         headers: {
           'auth-token': sessionStorage.getItem('Token')
         }
@@ -55,7 +55,7 @@ const Profile = () => {
           };
 
           try {
-            const response = await axios.put('http://10.1.123.86:3000/profile/location', geoJson, {
+            const response = await axios.put('https://se-project-backend-bbf.onrender.com/profile/location', geoJson, {
               headers: {
                 'auth-token': sessionStorage.getItem('Token')
               }
