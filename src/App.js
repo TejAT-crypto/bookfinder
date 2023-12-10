@@ -38,6 +38,8 @@ const App = () => {
     sessionStorage.setItem("isSignedIn", "false");
   };
 
+  console.log(socket)
+
   return (
     <div className="App">
       <Routes>

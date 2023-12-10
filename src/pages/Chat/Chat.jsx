@@ -15,6 +15,8 @@ const Chat = ({ socket }) => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [chats, setChats] = useState([]);
 
+  console.log(socket)
+
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -102,7 +104,8 @@ const Chat = ({ socket }) => {
             {selectedUser !== null && (
               <ChatWindow
                 selectedUser={selectedUser}
-                messages={chats} // Pass all chat messages
+                messages={chats}
+                socket={socket} // Pass all chat messages
               />
             )}
             {/* <div className="w-full">

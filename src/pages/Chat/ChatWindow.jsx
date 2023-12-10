@@ -9,6 +9,7 @@ const ChatWindow = ({ socket, selectedUser, messages }) => {
   const [chatMessages, setChatMessages] = useState(messages);
   const [chats, setChats] = useState([]);
   const [profileimg, setProfileimg] = useState("");
+  console.log("window: ", socket)
 
   console.log("selected user is: ", selectedUser);
 
@@ -41,14 +42,28 @@ const ChatWindow = ({ socket, selectedUser, messages }) => {
     }
   }, [selectedUser]);
 
+  // useEffect(() => {
+  //   if (socket) {
+  //     socket.on("chat message", (newMessage) => {
+  //       setChats((prevMessages) => [...prevMessages, newMessage]);
+  //     });
+
+  //     return () => {
+  //       socket.off("chat message");
+  //     };
+  //   }
+  // }, [socket]);
+
   useEffect(() => {
     if (socket) {
-      socket.on("chat message", (newMessage) => {
-        setChats((prevMessages) => [...prevMessages, newMessage]);
-      });
+      const handleNewMessage = (newMessage) => {
+        setChatMessages((prevMessages) => [...prevMessages, newMessage]);
+      };
+
+      socket.on("send-msg", handleNewMessage);
 
       return () => {
-        socket.off("chat message");
+        socket.off("send-msg", handleNewMessage);
       };
     }
   }, [socket]);
@@ -59,6 +74,11 @@ const ChatWindow = ({ socket, selectedUser, messages }) => {
     navigate("/dashboard");
     window.location.reload();
   };
+
+  // socket.on('send-msg', (data) => {
+  //   console.log('Received message on the frontend:', data);
+  //   // Update your chat window with the new message
+  // });
 
   return (
     <>
@@ -77,7 +97,7 @@ const ChatWindow = ({ socket, selectedUser, messages }) => {
         </div>
       </div>
       {/* <div className="w-full h-full bg-[#FFF5E0] p-20 overflow-hidden border border-black"> */}
-      <div className="flex flex-1 flex-col justify-end px-4 overflow-scroll">
+      {/* <div className="flex flex-1 flex-col justify-end px-4 overflow-scroll">
         {chats.map((message) =>
           message.user === sessionStorage.getItem("userId") ? (
             <div className="text-sm" key={message.id}>
@@ -95,9 +115,25 @@ const ChatWindow = ({ socket, selectedUser, messages }) => {
             </div>
           )
         )}
+      </div> */}
+      <div className="flex flex-1 flex-col justify-end px-4 overflow-scroll">
+        {chatMessages.map((message) => (
+          <div className="text-sm" key={message.id}>
+            <p>{message.username}</p>
+            <div
+              className={`${
+                message.user === sessionStorage.getItem("userId")
+                  ? "bg-green-300 ml-auto"
+                  : "bg-red-200"
+              } max-w-300 p-4 rounded-md text-base w-fit my-2`}
+            >
+              <p>{message.message}</p>
+            </div>
+          </div>
+        ))}
       </div>
       <div className="flex w-full">
-        <ChatFooter socket={socket} />
+        <ChatFooter socket={socket} selectedUser={selectedUser} />
       </div>
       {/* <button onClick={handleLeaveChat}>Leave Chat</button> */}
       {/* </div> */}

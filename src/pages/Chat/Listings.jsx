@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ChatWindow from "./ChatWindow";
+import ChatFooter from "./ChatFooter";
 
 const Listings = ({ socket }) => {
   const [users, setUsers] = useState([]);
@@ -15,7 +16,7 @@ const Listings = ({ socket }) => {
             "auth-token": sessionStorage.getItem("Token"),
           },
         });
-        console.log(response.data);
+        console.log("Fetched users:", response.data);
         setUsers(response.data);
       } catch (error) {
         console.error("Error fetching users:", error);
@@ -24,55 +25,6 @@ const Listings = ({ socket }) => {
 
     fetchUsers();
   }, []);
-
-  // const handleUserClick = async (chatData) => {
-  //   // try {
-  //   //   const bookId = chatData.bookId; // Extract the bookId from the response data
-  //   //   const response = await axios.get(`http://192.168.1.12:3000/chat/messages/${bookId}`, {
-  //   //     headers: {
-  //   //       'auth-token': sessionStorage.getItem('Token')
-  //   //     }
-  //   //   });
-  //     // console.log(chatData)
-  //     setSelectedUser(chatData); // Set the selected user
-  //     console.log(selectedUser)
-  //   //   setChats(response.data[0]?.messages || []); // Set the chat messages
-
-  //   // } catch (error) {
-  //   //   console.error('Error fetching chat history:', error);
-  //   // }
-  // };
-
-  // UseEffect to handle the user click
-  // useEffect(() => {
-  //   if (selectedUser) {
-  //     const fetchData = async () => {
-  //       try {
-  //         const bookId = users.find(user => user.users[1] === selectedUser)?.bookId;
-  //         const response = await axios.get(`http://192.168.1.12:3000/chat/messages/${bookId}`, {
-  //           headers: {
-  //             'auth-token': sessionStorage.getItem('Token')
-  //           }
-  //         });
-
-  //         // Check if response.data[0]?.messages is defined and iterable
-  //         setChats(response.data);
-  //         console.log(chats)
-
-  //       } catch (error) {
-  //         console.error('Error fetching chat history:', error);
-  //       }
-  //     };
-
-  //     fetchData();
-  //   }
-  // }, [selectedUser, users]);
-
-  // const handleUserClick = (chatData) => {
-  //   // Set the selected user
-
-  //   setSelectedUser(chatData.users[1]);
-  // };
 
   useEffect(() => {
     if (socket) {
@@ -86,6 +38,9 @@ const Listings = ({ socket }) => {
     }
   }, [socket]);
 
+  // Debugging selected user
+  console.log("Selected User:", selectedUser);
+
   return (
     <div className={`h-full bg-[#FFF5E0] flex-1/5 pb-20 pl-20 pr-20 pt-5`}>
       <div>
@@ -98,16 +53,145 @@ const Listings = ({ socket }) => {
       </div>
 
       {selectedUser !== null && (
-        <ChatWindow
-          selectedUser={selectedUser}
-          messages={chats} // Pass all chat messages
-        />
+        <>
+          <ChatWindow
+            selectedUser={selectedUser}
+            messages={chats}
+          />
+          <ChatFooter
+            socket={socket}
+            selectedUser={selectedUser}
+            messages={chats}
+          />
+        </>
       )}
     </div>
   );
 };
 
 export default Listings;
+
+
+/////////working code below
+// import React, { useState, useEffect } from "react";
+// import axios from "axios";
+// import ChatWindow from "./ChatWindow";
+// import ChatFooter from "./ChatFooter";
+
+// const Listings = ({ socket }) => {
+//   const [users, setUsers] = useState([]);
+//   const [selectedUser, setSelectedUser] = useState(null);
+//   const [chats, setChats] = useState([]);
+
+//   useEffect(() => {
+//     const fetchUsers = async () => {
+//       try {
+//         const response = await axios.get("http://192.168.1.12:3000/chat/", {
+//           headers: {
+//             "auth-token": sessionStorage.getItem("Token"),
+//           },
+//         });
+//         console.log(response.data);
+//         setUsers(response.data);
+//       } catch (error) {
+//         console.error("Error fetching users:", error);
+//       }
+//     };
+
+//     fetchUsers();
+//   }, []);
+
+//   // const handleUserClick = async (chatData) => {
+//   //   // try {
+//   //   //   const bookId = chatData.bookId; // Extract the bookId from the response data
+//   //   //   const response = await axios.get(`http://192.168.1.12:3000/chat/messages/${bookId}`, {
+//   //   //     headers: {
+//   //   //       'auth-token': sessionStorage.getItem('Token')
+//   //   //     }
+//   //   //   });
+//   //     // console.log(chatData)
+//   //     setSelectedUser(chatData); // Set the selected user
+//   //     console.log(selectedUser)
+//   //   //   setChats(response.data[0]?.messages || []); // Set the chat messages
+
+//   //   // } catch (error) {
+//   //   //   console.error('Error fetching chat history:', error);
+//   //   // }
+//   // };
+
+//   // UseEffect to handle the user click
+//   // useEffect(() => {
+//   //   if (selectedUser) {
+//   //     const fetchData = async () => {
+//   //       try {
+//   //         const bookId = users.find(user => user.users[1] === selectedUser)?.bookId;
+//   //         const response = await axios.get(`http://192.168.1.12:3000/chat/messages/${bookId}`, {
+//   //           headers: {
+//   //             'auth-token': sessionStorage.getItem('Token')
+//   //           }
+//   //         });
+
+//   //         // Check if response.data[0]?.messages is defined and iterable
+//   //         setChats(response.data);
+//   //         console.log(chats)
+
+//   //       } catch (error) {
+//   //         console.error('Error fetching chat history:', error);
+//   //       }
+//   //     };
+
+//   //     fetchData();
+//   //   }
+//   // }, [selectedUser, users]);
+
+//   // const handleUserClick = (chatData) => {
+//   //   // Set the selected user
+
+//   //   setSelectedUser(chatData.users[1]);
+//   // };
+
+//   useEffect(() => {
+//     if (socket) {
+//       socket.on("chat message", (newMessage) => {
+//         setChats((prevMessages) => [...prevMessages, newMessage]);
+//       });
+
+//       return () => {
+//         socket.off("chat message");
+//       };
+//     }
+//   }, [socket]);
+
+//   return (
+//     <div className={`h-full bg-[#FFF5E0] flex-1/5 pb-20 pl-20 pr-20 pt-5`}>
+//       <div>
+//         <h4 className="mx-0 mb-20 mt-0">USERS</h4>
+//         {users.map((user) => (
+//           <button key={user.otherUser} onClick={() => setSelectedUser(user)}>
+//             {user.otherUser}
+//           </button>
+//         ))}
+//       </div>
+
+//       {selectedUser !== null && (
+//         <>
+//           <ChatWindow
+//             selectedUser={selectedUser}
+//             messages={chats}
+//           />
+//           <ChatFooter
+//             selectedUser={selectedUser} // Make sure chatId is the correct property
+//           />
+//         </>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default Listings;
+
+
+////////////working code above
 
 // import React, { useState, useEffect } from 'react';
 // import axios from 'axios';
