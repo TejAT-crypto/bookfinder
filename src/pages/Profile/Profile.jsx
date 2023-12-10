@@ -10,6 +10,8 @@ const Profile = () => {
   const [location, setLocation] = useState(null);
   const [Loading, setLoading] = useState(false);
   const [books, setBooks] = useState([]);
+  const [borrowedBooks, setBorrowedBooks] = useState([]);
+  const [lendedBooks, setLendedBooks] = useState([]);
   const [activity, setActivity] = useState([]);
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
@@ -110,7 +112,11 @@ const Profile = () => {
           },
         }
       );
+      console.log("data: ", response.data);
+      console.log("size of len books: ", response.data.lendedBooks.length);
       setActivity(response.data);
+      setBorrowedBooks(response.data.borrowedBooks);
+      setLendedBooks(response.data.lendedBooks);
       setLoading(false);
     } catch (err) {
       setLoading(false);
@@ -240,22 +246,47 @@ const Profile = () => {
           <div className="flex flex-col h-full">
             <div className="flex justify-end mr-4 ml-8">
               <button className="w-fit bg-[#141E46] text-white rounded-lg px-4 py-2 text-lg">
-                Activity
+                Book History
               </button>
             </div>
 
             <div className="bg-white rounded-lg mb-4 mr-4 mt-2 ml-8">
-              <div className="flex flex-col justify-left text-left space-y-4 m-4 underline">
-              {!Loading ? (
-                    activity.map((act) => (
-                      <div>
-                        
-                      </div>
-                    ))
-                  ) : (
-                    <p>Loading...</p>
-                  )}
-                  
+              <div className="flex flex-col justify-left text-left space-y-4 m-4">
+
+                {Loading && <p>Loading...</p>}
+
+                {!Loading & !(borrowedBooks.length === 0 & lendedBooks.length === 0) &&
+                  <>
+                    <div>
+                      <h2 className="text-2xl font-bold text-[#C70039]">Borrowed Books</h2>
+                      {borrowedBooks.length === 0 && <p className="text-xl">You have not borrowed any books yet</p>}
+                      <ul>
+                        {borrowedBooks.length > 0 && borrowedBooks.map((book) => (
+                          <li className="flex space-x-2 items-center text-xl" key={book.id}>
+                            {/* Render details of each borrowed book */}
+                            <p className="font-bold mr-2"> {book.title} </p> by <p className="font-bold mr-2"> {book.author}</p>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div>
+                      <h2 className="text-2xl font-bold text-[#C70039]">Lended Books</h2>
+                      {lendedBooks.length === 0 && <p className="text-xl">You not lended any books yet</p>}
+                      <ul>
+                        {lendedBooks.length > 0 && lendedBooks.map((book) => (
+                          <li className="flex space-x-2 items-center text-xl" key={book.id}>
+                            {/* Render details of each lended book */}
+                            <p className="font-bold mr-2"> {book.title} </p> by <p className="font-bold mr-2"> {book.author}</p>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </>}
+                {!Loading & (borrowedBooks.length === 0 & lendedBooks.length === 0) &&
+                  (<p className="text-xl text-red-500">No activity yet</p>)
+                }
+
                 {/* <p>Transaction 1</p>
                 <p>Transaction 2</p>
                 <p>Transaction 3</p>
@@ -269,8 +300,8 @@ const Profile = () => {
               <div className="relative mb-4">
                 <div className="flex flex-row items-center">
                   <div className="">
-                    <p className="underline underline-offset-2 text-lg font-semibold">
-                      Books that you have Added will be shown here.
+                    <p className="text-2xl font-semibold">
+                      Books that you have Added will be shown here
                     </p>
                   </div>
                   <button
@@ -284,12 +315,10 @@ const Profile = () => {
                 </div>
               </div>
               <div className="bg-white p-4 rounded-lg">
-                <div className="flex flex-col justify-left text-left space-y-4 m-4 underline">
+                <div className="flex flex-col justify-left text-left space-y-4 m-4">
                   {!Loading ? (
                     books.map((book) => (
-                      <Link to={`/book/${book._id}`}>
-                        <p>{book.title}</p>
-                      </Link>
+                      <p className="text-xl font-bold">{book.title}</p>
                     ))
                   ) : (
                     <p>Loading...</p>

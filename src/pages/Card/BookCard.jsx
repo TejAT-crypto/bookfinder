@@ -109,7 +109,7 @@ const BookCard = ({ book,bookIds }) => {
             </p> */}
           </div>
 
-          <p className="text-black mx-2 px-2 py-2">{book.description}</p>
+          <p className="flex justify-center items-center text-black mx-2 px-2 py-2 max-h-48 overflow-scroll">{book.description}</p>
         </div>
 
         <div className="flex items-center justify-center px-4 py-4 bg-[#FFF5E0]">
