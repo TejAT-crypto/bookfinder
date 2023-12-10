@@ -68,11 +68,11 @@ const Listings = ({ socket }) => {
   //   }
   // }, [selectedUser, users]);
 
-  const handleUserClick = (chatData) => {
-    // Set the selected user
+  // const handleUserClick = (chatData) => {
+  //   // Set the selected user
 
-    setSelectedUser(chatData.users[1]);
-  };
+  //   setSelectedUser(chatData.users[1]);
+  // };
 
   useEffect(() => {
     if (socket) {
@@ -88,7 +88,7 @@ const Listings = ({ socket }) => {
 
   return (
     <div
-      className={`h-full bg-[#FFF5E0] flex-1/5 pb-20 pl-20 pr-20 pt-5 border-t border-black`}
+      className={`h-full bg-[#FFF5E0] flex-1/5 pb-20 pl-20 pr-20 pt-5`}
     >
       <div>
         <h4 className="mx-0 mb-20 mt-0">USERS</h4>
@@ -256,7 +256,7 @@ const Listings = ({ socket }) => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get(' http://192.168.137.54:3000/chat/', {
+        const response = await axios.get(' http://10.1.124.13:3000/chat/', {
           headers: {
             'auth-token': sessionStorage.getItem('Token')
           }

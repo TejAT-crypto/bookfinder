@@ -10,6 +10,21 @@ const Profile = () => {
   const [location, setLocation] = useState(null);
   const navigate = useNavigate();
 
+  const [profilePhoto, setProfilePhoto] = useState(
+    "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  );
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfilePhoto(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const reverseGeocoding = async (latitude, longitude) => {
     const response = await fetch(
       `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=fafc6e5828c742fba047a65f1007f52d`
@@ -49,7 +64,7 @@ const Profile = () => {
         headers: {
           'auth-token': sessionStorage.getItem('Token')
         }
-    });
+      });
       setProfile(response.data);
     } catch (err) {
       console.log(err);
@@ -75,7 +90,7 @@ const Profile = () => {
               headers: {
                 'auth-token': sessionStorage.getItem('Token')
               }
-          });
+            });
             const reverseGeoData = await reverseGeocoding(
               position.coords.latitude,
               position.coords.longitude
@@ -110,9 +125,16 @@ const Profile = () => {
         <div className="w-1/3">
           <div className="flex flex-col">
             <img
-              src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              src={profilePhoto}
               alt="Author"
-              className="w-48 h-48 object-cover rounded-full mx-auto"
+              className="w-48 h-48 object-cover rounded-full mx-auto cursor-pointer"
+            />
+            <input
+              type="file"
+              id="profile-photo-input"
+              accept="image/*"
+              style={{ display: "none" }}
+              onChange={handleFileChange}
             />
             <div className="flex flex-row m-4 justify-center text-2xl text-yellow-400">
               <MdStar />
@@ -155,30 +177,32 @@ const Profile = () => {
                   <p className="text-xl font-light">22</p>
                 </div>
               </div>
-              <button className="flex flex-row rounded-xl bg-[#141E46] text-white font-bold text-xl justify-center p-3 mt-8">
-                <p>Edit Profile</p>
+              <button className="flex flex-row rounded-xl bg-[#141E46] text-white font-bold text-xl justify-center p-3 mt-8" onClick={() => {
+                navigate("/editProfile");
+              }}>
+                Edit Profile
               </button>
             </div>
           </div>
         </div>
         <div className="w-full min-h-screen">
           <div className="flex flex-col h-full">
-              <div className="flex justify-end mr-4 ml-8">
-                <button className="w-fit bg-[#141E46] text-white rounded-lg px-4 py-2 text-lg" onClick={() => {
-                    navigate("/editProfile");
-                  }}>
-                  Activity
-                </button>
-              </div>
+            <div className="flex justify-end mr-4 ml-8">
+              <button
+                className="w-fit bg-[#141E46] text-white rounded-lg px-4 py-2 text-lg">
+                Activity
+              </button>
+            </div>
+
             <div className="bg-white rounded-lg mb-4 mr-4 mt-2 ml-8">
               <div className="flex flex-col justify-left text-left space-y-4 m-4 underline">
-                <p>Transaction 1</p>
+                {/* <p>Transaction 1</p>
                 <p>Transaction 2</p>
                 <p>Transaction 3</p>
                 <p>Transaction 4</p>
                 <p>Transaction 5</p>
                 <p>Transaction 6</p>
-                <p>Transaction 7</p>
+                <p>Transaction 7</p> */}
               </div>
             </div>
             <div className="ml-8 mx-4 mt-8">

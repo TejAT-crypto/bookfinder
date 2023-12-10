@@ -18,9 +18,10 @@ const BookCard = ({ book }) => {
           const response = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${coordinates[1]}+${coordinates[0]}&key=fafc6e5828c742fba047a65f1007f52d`);
           const data = await response.json();
           const results = data.results;
+          console.log(results)
       
           if (results[0]) {
-            setAddress(results[0].formatted);
+            setAddress(results[0].components.state_district);
           }
       } catch (error) {
         console.error("Error fetching address:", error);
@@ -35,19 +36,22 @@ const BookCard = ({ book }) => {
         <div className="h-72 overflow-hidden py-5 bg-[#fbf3e7]">
           <img
             className="h-full w-full object-contain"
-            src={book.imageUrl} 
+            src={`data:image/png;base64,${book.bookimage.data}`} 
             // https://www.gkpublications.com/wp-content/uploads/2023/11/Dummy-book.jpg
             alt={book.name}
           />
         </div>
 
         <div className="bg-[#FFF5E0]">
-          <div className="px-4 py-2 bg-[#C70039] bg-opacity-80 h-[3.13rem] text-white text-xl font-semibold mb-2 text-left">
-            {book.name}
+          <div className="px-4 py-2 bg-[#C70039] bg-opacity-80 h-1/2 text-white text-xl font-semibold mb-2 text-left">
+            <p className="">
+              {book.title}
+            </p>
+            {book.author}
           </div>
           <div className="flex items-center justify-between text-md text-black">
             <p className="flex items-center ml-3">
-              <MdLocationOn className='text-lg' /> <span className='ml-1 mr-5'> {book.location}</span>
+              <MdLocationOn className='text-lg' /> <span className='ml-1 mr-5'> {address}</span>
             </p>
             {/* <p className="flex items-center mr-3">
               <StarRating rating={book.ratings} /> <span> {book.noofratings} reviews</span>
