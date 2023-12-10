@@ -8,6 +8,7 @@ const ChatWindow = ({ socket, selectedUser, messages }) => {
   const navigate = useNavigate();
   const [chatMessages, setChatMessages] = useState(messages);
   const [chats, setChats] = useState([]);
+  const [profileimg, setProfileimg] = useState("");
 
   console.log("selected user is: ", selectedUser);
 
@@ -24,7 +25,9 @@ const ChatWindow = ({ socket, selectedUser, messages }) => {
 
           // Check if response.data[0]?.messages is defined and iterable
           console.log(response.data);
-          setChats(response.data);
+          setChats(response.data.chats);
+          setProfileimg(response.data.image);
+          console.log(profileimg)
           console.log(chats);
         } catch (error) {
           console.error("Error fetching chat history:", error);
@@ -58,10 +61,9 @@ const ChatWindow = ({ socket, selectedUser, messages }) => {
     <>
       <div className="flex flex-row w-full border-b-2 border-black space-x-2 items-center relative">
         <div className="m-4 ml-2">
-          <img
-            src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            alt="Profile"
+        <img
             className="rounded-full h-12 w-12 object-cover"
+            src={`data:image/png;base64,${profileimg}`} 
           />
         </div>
         <div className="">

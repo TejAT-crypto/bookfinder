@@ -241,8 +241,7 @@ export default Listings;
 
 // export default Listings;
 
-{
-  /* 
+{/* 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ChatWindow from './ChatWindow';
