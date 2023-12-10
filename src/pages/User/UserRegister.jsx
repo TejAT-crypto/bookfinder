@@ -1,10 +1,9 @@
 import React, { useState, useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import axios from 'axios';
-import '../../App.css';
+import axios from "axios";
+import "../../App.css";
 import img from "../../assets/image_1.png";
-
 
 const UserRegister = (props) => {
   const navigate = useNavigate();
@@ -23,10 +22,7 @@ const UserRegister = (props) => {
           return;
         }
         console.log(tokenToSet);
-        sessionStorage.setItem(
-          "Token",
-          tokenToSet
-        );
+        sessionStorage.setItem("Token", tokenToSet);
         sessionStorage.setItem("isLoggedIn", true);
         sessionStorage.setItem("role", res && res.data ? res.data.role : "");
         sessionStorage.setItem(
@@ -75,7 +71,7 @@ const UserRegister = (props) => {
                   className="space-y-4 lg:space-y-6"
                   onSubmit={handleSubmit(submit)}
                 >
-                  <div className='pt-1.5'>
+                  <div className="pt-1.5">
                     <input
                       type="text"
                       name="username"
@@ -86,7 +82,7 @@ const UserRegister = (props) => {
                       required
                     />
                   </div>
-                  <div className='pt-1.5'>
+                  <div className="pt-1.5">
                     <input
                       type="text"
                       name="email"
@@ -97,7 +93,7 @@ const UserRegister = (props) => {
                       required
                     />
                   </div>
-                  <div className='pt-1.5 pb-2.5'>
+                  <div className="pt-1.5 pb-2.5">
                     <input
                       type="password"
                       name="password"
@@ -117,7 +113,12 @@ const UserRegister = (props) => {
                 </form>
                 <div className="flex flex-row justify-center mt-3 text-xs md:text-base">
                   <p className="text-white text-md">Have an Account?</p>
-                  <Link to="/login" className="ml-2 text-[#AFD7FF] hover:underline text-md">Login</Link>
+                  <Link
+                    to="/login"
+                    className="ml-2 text-[#AFD7FF] hover:underline text-md"
+                  >
+                    Login
+                  </Link>
                 </div>
               </div>
             </div>

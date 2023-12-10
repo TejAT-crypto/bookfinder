@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import ChatWindow from './ChatWindow';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import ChatWindow from "./ChatWindow";
 
 const Listings = ({ socket }) => {
   const [users, setUsers] = useState([]);
@@ -12,13 +12,13 @@ const Listings = ({ socket }) => {
       try {
         const response = await axios.get('http://10.1.124.13:3000/chat/', {
           headers: {
-            'auth-token': sessionStorage.getItem('Token')
-          }
+            "auth-token": sessionStorage.getItem("Token"),
+          },
         });
-        console.log(response.data)
+        console.log(response.data);
         setUsers(response.data);
       } catch (error) {
-        console.error('Error fetching users:', error);
+        console.error("Error fetching users:", error);
       }
     };
 
@@ -54,20 +54,19 @@ const Listings = ({ socket }) => {
   //             'auth-token': sessionStorage.getItem('Token')
   //           }
   //         });
-  
+
   //         // Check if response.data[0]?.messages is defined and iterable
   //         setChats(response.data);
   //         console.log(chats)
-  
+
   //       } catch (error) {
   //         console.error('Error fetching chat history:', error);
   //       }
   //     };
-  
+
   //     fetchData();
   //   }
   // }, [selectedUser, users]);
-  
 
   const handleUserClick = (chatData) => {
     // Set the selected user
@@ -77,18 +76,20 @@ const Listings = ({ socket }) => {
 
   useEffect(() => {
     if (socket) {
-      socket.on('chat message', (newMessage) => {
+      socket.on("chat message", (newMessage) => {
         setChats((prevMessages) => [...prevMessages, newMessage]);
       });
 
       return () => {
-        socket.off('chat message');
+        socket.off("chat message");
       };
     }
   }, [socket]);
 
   return (
-    <div className={`h-full bg-[#FFF5E0] flex-1/5 pb-20 pl-20 pr-20 pt-5 border-t border-black`}>
+    <div
+      className={`h-full bg-[#FFF5E0] flex-1/5 pb-20 pl-20 pr-20 pt-5 border-t border-black`}
+    >
       <div>
         <h4 className="mx-0 mb-20 mt-0">USERS</h4>
         {users.map((user) => (
@@ -109,8 +110,6 @@ const Listings = ({ socket }) => {
 };
 
 export default Listings;
-
-
 
 // import React, { useState, useEffect } from 'react';
 // import axios from 'axios';
@@ -163,7 +162,7 @@ export default Listings;
 //   //     console.error('Error fetching chat history:', error);
 //   //   }
 //   // };
-  
+
 //   const handleUserClick = async (userId) => {
 //     console.log("user id: ", userId);
 //     console.log("users ids: ", userId.users[1]);
@@ -195,7 +194,7 @@ export default Listings;
 //      socket.on('chat message', (newMessage) => {
 //        setChats((prevMessages) => [...prevMessages, newMessage]);
 //      });
-   
+
 //      return () => {
 //        socket.off('chat message');
 //      };
@@ -242,7 +241,8 @@ export default Listings;
 
 // export default Listings;
 
-{/* 
+{
+  /* 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ChatWindow from './ChatWindow';
@@ -256,7 +256,7 @@ const Listings = ({ socket }) => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get('http://10.1.124.13:3000/chat/', {
+        const response = await axios.get(' http://192.168.137.54:3000/chat/', {
           headers: {
             'auth-token': sessionStorage.getItem('Token')
           }
@@ -312,7 +312,8 @@ const Listings = ({ socket }) => {
         {users.map(user => (
           // Ensure user has a unique and valid identifier
           <button key={user._id} onClick={() => handleUserClick(user.users[0])}>
-            {user.users[0]} {/* Adjust this if necessary based on your user data structure */}
+            {user.users[0]} {/* Adjust this if necessary based on your user data structure */
+}
 //           </button>
 //         ))}
 //       </ul>
@@ -328,10 +329,6 @@ const Listings = ({ socket }) => {
 // };
 
 // export default Listings; */}
-
-
-
-
 
 //   const [users, setUsers] = useState([]);
 //   const [isMobile, setIsMobile] = useState(false);
@@ -387,7 +384,6 @@ const Listings = ({ socket }) => {
 //     // fetchUserListing(user);
 //   };
 
-
 //   useEffect(() => {
 //     // Example: Update totalUsersTalked when users change
 //     setTotalUsersTalked(users.length);
@@ -406,5 +402,3 @@ const Listings = ({ socket }) => {
 //       socket.off('newUserResponse');
 //     };
 //   }, [socket, users]);
-
-  
