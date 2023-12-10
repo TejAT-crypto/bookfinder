@@ -2,11 +2,18 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { MdOutlineSearch } from "react-icons/md";
 
-const Header = () => {
+const Header = ({ onSearch }) => {
     const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     const toggleMobileMenu = () => {
         setMobileMenuOpen(!isMobileMenuOpen);
+    };
+
+    const [searchTerm, setSearchTerm] = useState("");
+
+    const handleSearch = () => {
+      onSearch(searchTerm);
+      console.log(searchTerm);
     };
 
     return (
@@ -23,8 +30,10 @@ const Header = () => {
                 type="text"
                 placeholder="I'm looking for"
                 className="pl-4 py-2 pr-10 bg-[#fff5e0] text-[#141E46] rounded-xl border border-gray-300 focus:outline-none focus:border-[#141E46] w-96"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
               />
-              <MdOutlineSearch className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5 cursor-pointer" />
+              <MdOutlineSearch className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5 cursor-pointer" onClick={handleSearch} />
             </div>
 
             {/* Navigation Links */}

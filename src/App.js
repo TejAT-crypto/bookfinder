@@ -9,9 +9,11 @@ import Discussion from "./pages/Discussion/Discussion";
 import Profile from "./pages/Profile/Profile";
 import Chat from "./pages/Chat/Chat";
 import Activity from "./pages/Activity/Activity";
+import AddBook from "./pages/Profile/AddBook";
+import EditProfile from "./pages/Profile/EditProfile";
 import socketIO from "socket.io-client";
 
-const socket = socketIO.connect('https://se-project-backend-bbf.onrender.com');
+const socket = socketIO.connect('http://10.1.124.13:3000');
 
 const App = () => {
   const [isSignedIn, setIsSignedIn] = React.useState(
@@ -78,6 +80,22 @@ const App = () => {
           element={
             // <Protected isSignedIn={isSignedIn}>
             <Activity signin={signin} signout={signout} />
+            // </Protected>
+          }
+        />
+        <Route
+          path="/addBook"
+          element={
+            // <Protected isSignedIn={isSignedIn}>
+            <AddBook signin={signin} signout={signout} />
+            // </Protected>
+          }
+        />
+        <Route
+          path="/editProfile"
+          element={
+            // <Protected isSignedIn={isSignedIn}>
+            <EditProfile signin={signin} signout={signout} />
             // </Protected>
           }
         />

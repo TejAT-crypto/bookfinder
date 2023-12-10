@@ -15,7 +15,7 @@ const UserRegister = (props) => {
 
   const submit = async (data) => {
     axios
-      .post("https://se-project-backend-bbf.onrender.com/auth/register", data)
+      .post("http://10.1.124.13:3000/auth/register", data)
       .then((res) => {
         console.log(res);
         const tokenToSet = res.data ? res.data.token : "";

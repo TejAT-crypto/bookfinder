@@ -14,7 +14,7 @@ const ChatWindow = ({ socket, selectedUser, messages }) => {
       const fetchData = async () => {
         try {
           const chatId = selectedUser.chatId;
-          const response = await axios.get(`https://se-project-backend-bbf.onrender.com/chat/messages/${chatId}`, {
+          const response = await axios.get(`http://10.1.124.13:3000/chat/messages/${chatId}`, {
             headers: {
               'auth-token': sessionStorage.getItem('Token')
             }
@@ -58,7 +58,7 @@ const handleLeaveChat = () => {
    <>
      <div className="w-full h-full bg-[#FFF5E0] p-20 overflow-hidden border border-black">
        {chats.map((message) =>
-         message.name === sessionStorage.getItem('username') ? (
+         message.user === sessionStorage.getItem('userId') ? (
            <div className="text-sm" key={message.id}>
            <p>{message.username}</p>
              <div className="bg-green-300 max-w-300 p-10 rounded-md ml-auto text-base">
@@ -67,7 +67,7 @@ const handleLeaveChat = () => {
            </div>
          ) : (
            <div className="text-sm" key={message.id}>
-             <p>{message.username}</p>
+             <p>{message.otherUser}</p>
              <div className="bg-red-200 w-300 p-10 rounded-md text-base">
                <p>{message.message}</p>
              </div>

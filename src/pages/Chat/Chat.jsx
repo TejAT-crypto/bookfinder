@@ -10,6 +10,12 @@ const Chat = ({ socket }) => {
   const [typingStatus, setTypingStatus] = useState('');
   const lastMessageRef = useRef(null);
 
+  const handleNewMessage = (newMessage) => {
+    setMessages(prevMessages => [...prevMessages, newMessage]);
+    // Emit the message to the server as well
+    socket.emit('message', newMessage);
+  };
+
   useEffect(() => {
     socket.on('messageResponse', (data) => setMessages([...messages, data]));
   }, [socket, messages]);
@@ -33,7 +39,7 @@ const Chat = ({ socket }) => {
 
           <div className="flex flex-col w-full">
             <ChatWindow messages={messages} lastMessageRef={lastMessageRef} typingStatus={typingStatus} />
-            <ChatFooter socket={socket} />
+            <ChatFooter onSendMessage={handleNewMessage} socket={socket} />
           </div>
         </div>
       </div>

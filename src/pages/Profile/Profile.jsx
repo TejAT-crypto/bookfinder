@@ -3,11 +3,12 @@ import { MdStar, MdStarBorder, MdStarHalf } from "react-icons/md";
 import React, { useEffect, useState } from 'react';
 import Header from '../Dashboard/Header';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 
 const Profile = () => {
   const [profile, setProfile] = useState([]);
   const [location, setLocation] = useState(null);
+  const navigate = useNavigate();
 
   const reverseGeocoding = async (latitude, longitude) => {
    
@@ -30,9 +31,21 @@ const Profile = () => {
     throw new Error('Could not find city name');
   };
 
+  const addBook = (data) => {
+    try {
+      axios.post('http://10.1.124.13:3000/book/add', data, {
+        headers: {
+          'auth-token': sessionStorage.getItem('Token')
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   const fetchUserDetails = async () => {
     try {
-      const response = await axios.get('https://se-project-backend-bbf.onrender.com/profile/user', {
+      const response = await axios.get('http://10.1.124.13:3000/profile/user', {
         headers: {
           'auth-token': sessionStorage.getItem('Token')
         }
@@ -55,7 +68,7 @@ const Profile = () => {
           };
 
           try {
-            const response = await axios.put('https://se-project-backend-bbf.onrender.com/profile/location', geoJson, {
+            const response = await axios.put('http://10.1.124.13:3000/profile/location', geoJson, {
               headers: {
                 'auth-token': sessionStorage.getItem('Token')
               }
@@ -144,12 +157,14 @@ const Profile = () => {
         </div>
         <div className="w-full min-h-screen">
           <div className="flex flex-col h-full">
-            <div className="bg-white rounded-lg m-4 ml-8">
-              <div className="flex justify-end">
-                <button className="w-fit bg-[#141E46] text-white rounded-lg px-4 py-2 text-lg">
-                  <p>Activity</p>
+              <div className="flex justify-end mr-4 ml-8">
+                <button className="w-fit bg-[#141E46] text-white rounded-lg px-4 py-2 text-lg" onClick={() => {
+                    navigate("/editProfile");
+                  }}>
+                  Activity
                 </button>
               </div>
+            <div className="bg-white rounded-lg mb-4 mr-4 mt-2 ml-8">
               <div className="flex flex-col justify-left text-left space-y-4 m-4 underline">
                 <p>Transaction 1</p>
                 <p>Transaction 2</p>
@@ -168,20 +183,22 @@ const Profile = () => {
                       Books that you have Added will be shown here.
                     </p>
                   </div>
-                  <button className="absolute right-0 w-fit bg-[#141E46] text-white rounded-lg px-4 py-2 text-lg">
-                    <p>Add Book</p>
+                  <button className="absolute right-0 w-fit bg-[#141E46] text-white rounded-lg px-4 py-2 text-lg" onClick={() => {
+                    navigate("/addBook");
+                  }}>
+                    Add Book
                   </button>
                 </div>
               </div>
-              <div className="bg-white p-4">
+              <div className="bg-white p-4 rounded-lg">
                 <div className="flex flex-col justify-left text-left space-y-4 m-4 underline">
-                  <p>Book 1</p>
+                  {/* <p>Book 1</p>
                   <p>Book 2</p>
                   <p>Book 3</p>
                   <p>Book 4</p>
                   <p>Book 5</p>
                   <p>Book 6</p>
-                  <p>Book 7</p>
+                  <p>Book 7</p> */}
                 </div>
               </div>
             </div>
