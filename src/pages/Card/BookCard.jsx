@@ -1,14 +1,32 @@
 // card.jsx
 
 import React, { useState, useEffect } from "react";
-import StarRating from './ratings';
+import StarRating from "./ratings";
 import axios from "axios";
 import { MdLocationOn, MdBookmarkBorder } from "react-icons/md";
 
-
 const BookCard = ({ book }) => {
-
   const [address, setAddress] = useState("");
+
+  const requestBook = async () => {
+    try {
+      const response = await axios.post(
+        "http://192.168.1.12:3000/chat/sendRequest",
+        {
+          bookId: book._id,
+          otherUserId: book.userid,
+        },
+        {
+          headers: {
+            "auth-token": sessionStorage.getItem("Token"),
+          },
+        }
+      );
+      console.log(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   useEffect(() => {
     const reverseGeocode = async () => {
@@ -36,7 +54,7 @@ const BookCard = ({ book }) => {
         <div className="h-72 overflow-hidden py-5 bg-[#fbf3e7]">
           <img
             className="h-full w-full object-contain"
-            src={`data:image/png;base64,${book.bookimage.data}`} 
+            src={`data:image/png;base64,${book.bookimage.data}`}
             // https://www.gkpublications.com/wp-content/uploads/2023/11/Dummy-book.jpg
             alt={book.name}
           />
@@ -44,14 +62,13 @@ const BookCard = ({ book }) => {
 
         <div className="bg-[#FFF5E0]">
           <div className="px-4 py-2 bg-[#C70039] bg-opacity-80 h-1/2 text-white text-xl font-semibold mb-2 text-left">
-            <p className="">
-              {book.title}
-            </p>
+            <p className="">{book.title}</p>
             {book.author}
           </div>
           <div className="flex items-center justify-between text-md text-black">
             <p className="flex items-center ml-3">
-              <MdLocationOn className='text-lg' /> <span className='ml-1 mr-5'> {address}</span>
+              <MdLocationOn className="text-lg" />{" "}
+              <span className="ml-1 mr-5"> {address}</span>
             </p>
             {/* <p className="flex items-center mr-3">
               <StarRating rating={book.ratings} /> <span> {book.noofratings} reviews</span>
@@ -62,11 +79,14 @@ const BookCard = ({ book }) => {
         </div>
 
         <div className="flex items-center justify-center px-4 py-4 bg-[#FFF5E0]">
-          <button className="bg-[#C70039] bg-opacity-80 text-white px-12 py-2 rounded-md">
+          <button
+            className="bg-[#C70039] bg-opacity-80 text-white px-12 py-2 rounded-md"
+            onClick={() => requestBook()}
+          >
             Get a Book
           </button>
           <button className="text-[#C70039] text-opacity-80 py-2 px-2 rounded-lg text-3xl ml-6 border shadow">
-            <MdBookmarkBorder  />
+            <MdBookmarkBorder />
           </button>
         </div>
       </div>

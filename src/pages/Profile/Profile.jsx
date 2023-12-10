@@ -82,18 +82,15 @@ const Profile = () => {
   const fetchUserBooks = async () => {
     try {
       setLoading(true);
-      const response = await axios.get("http://192.168.1.12:3000/book/uploads", {
-        headers: {
-          "auth-token": sessionStorage.getItem("Token"),
-        },
-      });
-      console.log(response.data);
-      console.log(profile);
-      // const filteredBooks = await response.data.filter(
-      //   (book) => book.userid === profile._id
-      // );
+      const response = await axios.get(
+        "http://192.168.1.12:3000/book/uploads",
+        {
+          headers: {
+            "auth-token": sessionStorage.getItem("Token"),
+          },
+        }
+      );
       setBooks(response.data);
-      // console.log("filtered books are: ", filteredBooks);
       setLoading(false);
     } catch (err) {
       setLoading(false);
