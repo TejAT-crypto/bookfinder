@@ -15,7 +15,7 @@ const BookCard = ({ book }) => {
       const { coordinates } = book.location;
 
       try {
-          const response = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${coordinates[1]}+${coordinates[0]}&key=fafc6e5828c742fba047a65f1007f52d`);
+          const response = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${coordinates[1]}+${coordinates[0]}&key=a632785c704b458890f2dcc00463ea27`);
           const data = await response.json();
           const results = data.results;
           console.log(results)

@@ -27,7 +27,7 @@ const Profile = () => {
 
   const reverseGeocoding = async (latitude, longitude) => {
     const response = await fetch(
-      `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=fafc6e5828c742fba047a65f1007f52d`
+      `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=a632785c704b458890f2dcc00463ea27`
     );
     const data = await response.json();
     const results = data.results;
@@ -82,17 +82,18 @@ const Profile = () => {
   const fetchUserBooks = async () => {
     try {
       setLoading(true);
-      const response = await axios.get("http://192.168.1.12:3000/book", {
+      const response = await axios.get("http://192.168.1.12:3000/book/uploads", {
         headers: {
           "auth-token": sessionStorage.getItem("Token"),
         },
       });
       console.log(response.data);
-      const filteredBooks = await response.data.filter(
-        (book) => book.userid === profile._id
-      );
-      setBooks(filteredBooks);
-      console.log("filtered books are: ", filteredBooks);
+      console.log(profile);
+      // const filteredBooks = await response.data.filter(
+      //   (book) => book.userid === profile._id
+      // );
+      setBooks(response.data);
+      // console.log("filtered books are: ", filteredBooks);
       setLoading(false);
     } catch (err) {
       setLoading(false);
