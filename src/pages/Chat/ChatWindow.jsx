@@ -9,7 +9,7 @@ const ChatWindow = ({ socket, selectedUser, messages }) => {
   const [chatMessages, setChatMessages] = useState(messages);
   const [chats, setChats] = useState([]);
 
-  console.log(selectedUser);
+  console.log("selected user is: ", selectedUser);
 
   useEffect(() => {
     if (selectedUser) {
@@ -68,7 +68,7 @@ const ChatWindow = ({ socket, selectedUser, messages }) => {
           />
         </div>
         <div className="">
-          <p className="text-xl font-medium">Tej</p>
+          <p className="text-xl font-medium">{selectedUser.otherUser}</p>
         </div>
         <div className="absolute right-0">
           <IoMdInformationCircleOutline className="h-6 w-6 mr-6" />
