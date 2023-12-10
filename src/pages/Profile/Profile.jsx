@@ -126,9 +126,7 @@ const Profile = () => {
 
   return (
     <>
-      <Header profilePhoto={
-        profilePhoto
-      } />
+      <Header profilePhoto={profilePhoto} />
       <div className="bg-[#FFF5E0] flex flex-row pt-4 min-h-screen">
         <div className="w-1/3">
           <div className="flex flex-col">
@@ -159,13 +157,13 @@ const Profile = () => {
                   </p>
                   {/* <p className="text-xl font-light">1234</p> */}
 
+                </div>
                   <button
                     className="rounded-lg bg-[#141E46] text-white font-bold text-md justify-center p-1.5"
                     onClick={getLocation}
                   >
                     Change Location
                   </button>
-                </div>
                 <div className="flex flex-row justify-left space-x-2">
                   <p className="font-bold text-xl">Books for Lend:</p>
                   <p className="text-xl font-light">20</p>
@@ -179,11 +177,11 @@ const Profile = () => {
                   <p className="text-xl font-light">22</p>
                 </div>
               </div>
-              <button className="flex flex-row rounded-xl bg-[#141E46] text-white font-bold text-xl justify-center p-3 mt-8" onClick={() => {
+              {/* <button className="flex flex-row rounded-xl bg-[#141E46] text-white font-bold text-xl justify-center p-3 mt-8" onClick={() => {
                 // navigate("/editProfile");
               }}>
                 Edit Profile
-              </button>
+              </button> */}
             </div>
           </div>
         </div>

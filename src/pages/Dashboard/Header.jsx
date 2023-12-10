@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { MdOutlineSearch } from "react-icons/md";
+import axios from "axios";
 
-const Header = ({ onSearch, profilePhoto }) => {
+const Header = ({ onSearch }) => {
     const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [profilePhoto, setProfilePhoto] = useState('');
 
     const toggleMobileMenu = () => {
         setMobileMenuOpen(!isMobileMenuOpen);
@@ -16,10 +18,30 @@ const Header = ({ onSearch, profilePhoto }) => {
       console.log(searchTerm);
     };
 
+    const fetchUserDetails = async () => {
+      try {
+        const response = await axios.get('http://10.1.124.13:3000/profile/user', {
+          headers: {
+            'auth-token': sessionStorage.getItem('Token')
+          }
+        });
+        console.log(response.data);
+        setProfilePhoto(response.data.image);
+        
+  
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    useEffect(() => {
+      fetchUserDetails();
+    },[])
+
     return (
       <header className="bg-[#fff5e0] text-[#141E46] p-4 border-b-2 border-black">
         <div className="container mx-auto flex justify-between items-center">
-          <div className="text-2xl font-bold">Logo</div>
+          <div className="text-2xl font-bold">Book Buddy Finder</div>
           <div className="hidden md:flex space-x-4 items-center">
             <div className="flex items-center space-x-4">{/* Logo */}</div>
 
@@ -63,7 +85,7 @@ const Header = ({ onSearch, profilePhoto }) => {
             <button className="ml-2 px-5">
               <Link to="/profile">
                 <img
-                  src={profilePhoto}
+                  src={`data:image/png;base64,${profilePhoto}`}
                   alt="Profile"
                   className="rounded-full h-12 w-12 object-cover"
                 />
