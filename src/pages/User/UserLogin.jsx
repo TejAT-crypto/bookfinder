@@ -32,8 +32,9 @@ const UserLogin = ({ socket }) => {
         // sessionStorage.setItem("role", res && res.data ? res.data.role : "");
         sessionStorage.setItem(
           "username",
-          res && res.data ? JSON.stringify(res.data.username) : {}
+          res && res.data ? res.data.username : {}
         );
+        sessionStorage.setItem("userId", res && res.data ? res.data._id : "")
         setUniqueID(res && res.data ? res.data._id : "");
 
         const userEmail = res.data ? res.data.email : "";
