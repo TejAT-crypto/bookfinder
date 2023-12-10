@@ -18,7 +18,7 @@ const Chat = ({ socket }) => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get("http://10.1.124.13:3000/chat/", {
+        const response = await axios.get("http://192.168.1.12:3000/chat/", {
           headers: {
             "auth-token": sessionStorage.getItem("Token"),
           },

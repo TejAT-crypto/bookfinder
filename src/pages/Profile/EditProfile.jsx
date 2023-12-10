@@ -17,7 +17,7 @@
 //         console.log(formData)
 
 //         // Make a POST request to /profile/upload-picture
-//         await axios.put('http://10.1.124.13:3000/profile/upload-picture', formData, {
+//         await axios.put('http://192.168.1.12:3000/profile/upload-picture', formData, {
 //           headers: {
 //             'Content-Type': 'multipart/form-data',
 //             'auth-token': sessionStorage.getItem('Token'),
@@ -26,7 +26,7 @@
 //         navigate("/profile")
 
 //         // // Fetch updated data after uploading
-//         // const updatedDataResponse = await axios.get('http://10.1.124.13:3000/profile/get-updated-data', {
+//         // const updatedDataResponse = await axios.get('http://192.168.1.12:3000/profile/get-updated-data', {
 //         //   headers: {
 //         //     'auth-token': sessionStorage.getItem('Token'),
 //         //   },
@@ -85,7 +85,7 @@ import axios from "axios";
 import { Navigate, useNavigate } from "react-router-dom";
 
 const BookForm = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     image: "",
   });
@@ -99,57 +99,56 @@ const BookForm = () => {
     }));
   };
 
-//   const handleFileChange = (e) => {
-//     const selectedFile = e.target.files[0];
+  //   const handleFileChange = (e) => {
+  //     const selectedFile = e.target.files[0];
 
-//     if (selectedFile) {
-//       const reader = new FileReader();
-//       reader.readAsDataURL(selectedFile);
-//       reader.onload = () => {
-//         setFormData((prevData) => ({
-//           ...prevData,
-//           imgSrc: reader.result, // Base64 string
-//         }));
-//       };
-//     }
+  //     if (selectedFile) {
+  //       const reader = new FileReader();
+  //       reader.readAsDataURL(selectedFile);
+  //       reader.onload = () => {
+  //         setFormData((prevData) => ({
+  //           ...prevData,
+  //           imgSrc: reader.result, // Base64 string
+  //         }));
+  //       };
+  //     }
 
-//     setFile(selectedFile);
-//   };
+  //     setFile(selectedFile);
+  //   };
 
-// const handleFileChange = (e) => {
-//     const selectedFile = e.target.files[0];
+  // const handleFileChange = (e) => {
+  //     const selectedFile = e.target.files[0];
 
-//     if (selectedFile) {
-//       resizeImage(selectedFile)
-//         .then((resizedImage) => {
-//           setFormData((prevData) => ({
-//             ...prevData,
-//             image: resizedImage,
-//           }));
-//         })
-//         .catch((error) => {
-//           console.error("Error resizing image:", error);
-//         });
-//     }
+  //     if (selectedFile) {
+  //       resizeImage(selectedFile)
+  //         .then((resizedImage) => {
+  //           setFormData((prevData) => ({
+  //             ...prevData,
+  //             image: resizedImage,
+  //           }));
+  //         })
+  //         .catch((error) => {
+  //           console.error("Error resizing image:", error);
+  //         });
+  //     }
 
-//     setFile(selectedFile);
-//   };
+  //     setFile(selectedFile);
+  //   };
 
-const handleFileChange = (e) => {
-  const selectedFile = e.target.files[0];
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
 
-  if (selectedFile) {
-    setFormData((prevData) => ({
-      ...prevData,
-      image: selectedFile,
-    }));
-  }
+    if (selectedFile) {
+      setFormData((prevData) => ({
+        ...prevData,
+        image: selectedFile,
+      }));
+    }
 
-  setFile(selectedFile);
-};
+    setFile(selectedFile);
+  };
 
-
-  console.log(file)
+  console.log(file);
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -157,20 +156,24 @@ const handleFileChange = (e) => {
       // Convert the file to Base64
       // const base64String = await convertFileToBase64(file);
 
-      console.log(formData)
+      console.log(formData);
       // Post form data to /book/add along with the base64 string
-      const response = await axios.put("http://10.1.124.13:3000/profile/upload-picture", {
-        ...formData,
-        image: file,
-      }, {
-              headers: {
-                'auth-token': sessionStorage.getItem('Token'),
-                'Content-Type': 'multipart/form-data',
-              }
-            });
+      const response = await axios.put(
+        "http://192.168.1.12:3000/profile/upload-picture",
+        {
+          ...formData,
+          image: file,
+        },
+        {
+          headers: {
+            "auth-token": sessionStorage.getItem("Token"),
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
       console.log("Form submitted successfully:", response.data);
-      navigate("/profile")
+      navigate("/profile");
       // Optionally, you can handle a successful submission
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -214,7 +217,6 @@ const handleFileChange = (e) => {
     });
   };
 
-
   // Helper function to convert file to Base64
   // const convertFileToBase64 = (file) => {
   //   return new Promise((resolve, reject) => {
@@ -240,9 +242,7 @@ const handleFileChange = (e) => {
         className="bg-white p-6 rounded shadow-xl w-1/3"
         onSubmit={handleSubmit}
       >
-      <p className="font-bold text-2xl mb-4">
-        Change Profile Picture
-      </p>
+        <p className="font-bold text-2xl mb-4">Change Profile Picture</p>
         <div className="mb-4">
           <input
             type="file"
@@ -265,5 +265,3 @@ const handleFileChange = (e) => {
 };
 
 export default BookForm;
-
-

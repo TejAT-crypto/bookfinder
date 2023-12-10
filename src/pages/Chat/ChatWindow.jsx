@@ -17,17 +17,20 @@ const ChatWindow = ({ socket, selectedUser, messages }) => {
       const fetchData = async () => {
         try {
           const chatId = selectedUser.chatId;
-          const response = await axios.get(`http://10.1.124.13:3000/chat/messages/${chatId}`, {
-            headers: {
-              'auth-token': sessionStorage.getItem('Token')
+          const response = await axios.get(
+            `http://192.168.1.12:3000/chat/messages/${chatId}`,
+            {
+              headers: {
+                "auth-token": sessionStorage.getItem("Token"),
+              },
             }
-        });
+          );
 
           // Check if response.data[0]?.messages is defined and iterable
           console.log(response.data);
           setChats(response.data.chats);
           setProfileimg(response.data.image);
-          console.log(profileimg)
+          console.log(profileimg);
           console.log(chats);
         } catch (error) {
           console.error("Error fetching chat history:", error);
@@ -61,9 +64,9 @@ const ChatWindow = ({ socket, selectedUser, messages }) => {
     <>
       <div className="flex flex-row w-full border-b-2 border-black space-x-2 items-center relative">
         <div className="m-4 ml-2">
-        <img
+          <img
             className="rounded-full h-12 w-12 object-cover"
-            src={`data:image/png;base64,${profileimg}`} 
+            src={`data:image/png;base64,${profileimg}`}
           />
         </div>
         <div className="">

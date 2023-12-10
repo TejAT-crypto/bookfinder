@@ -8,7 +8,6 @@
 // import BookCard from '../Card/BookCard';
 // import dummyBooks from "./dummy";
 
-
 // const DashBoard = (props) => {
 //   const navigate = useNavigate();
 //   const [userInfo, setUserInfo] = useState(false);
@@ -19,7 +18,7 @@
 //   const getBooks = async () => {
 //     try {
 //       // Post form data to /book/add along with the base64 string
-//       const response = await axios.get("http://10.1.124.13:3000/book/", {
+//       const response = await axios.get("http://192.168.1.12:3000/book/", {
 //           headers: {
 //             'auth-token': sessionStorage.getItem('Token')
 //           }
@@ -94,10 +93,10 @@ const DashBoard = (props) => {
 
   const getBooks = async () => {
     try {
-      const response = await axios.get("http://10.1.124.13:3000/book/", {
+      const response = await axios.get("http://192.168.1.12:3000/book/", {
         headers: {
-          'auth-token': sessionStorage.getItem('Token')
-        }
+          "auth-token": sessionStorage.getItem("Token"),
+        },
       });
       console.log(response.data);
 
@@ -125,7 +124,7 @@ const DashBoard = (props) => {
       );
 
       setBooks(booksWithGeocoding);
-      console.log(books)
+      console.log(books);
     } catch (error) {
       console.error("Error fetching books:", error);
     }
@@ -168,8 +167,15 @@ const DashBoard = (props) => {
         <div className="flex flex-col">
           <div className="relative w-full flex flex-row mx-auto mb-10 lg:py-0 animate-slide-in-2 overflow-hidden">
             <div className="relative md:w-1/2 flex flex-col items-center">
-              <p className="font-light text-[4.5rem] p-4 md:ml-20 w-10/12 text-left">Connect, Share and Discuss</p>
-              <p className="text-[1.25rem] p-2 pl-6 pr-6 md:ml-20 w-10/12 text-left">"Book Buddy Finder" is a web-based application designed to connect book enthusiasts in their local area. It facilitates the exchange of books, building of friendships, and creation of discussions among the community of readers.</p>
+              <p className="font-light text-[4.5rem] p-4 md:ml-20 w-10/12 text-left">
+                Connect, Share and Discuss
+              </p>
+              <p className="text-[1.25rem] p-2 pl-6 pr-6 md:ml-20 w-10/12 text-left">
+                "Book Buddy Finder" is a web-based application designed to
+                connect book enthusiasts in their local area. It facilitates the
+                exchange of books, building of friendships, and creation of
+                discussions among the community of readers.
+              </p>
             </div>
             <div className="relative flex-shrink-0 md:w-1/2 overflow-hidden">
               <img
@@ -183,16 +189,17 @@ const DashBoard = (props) => {
           <div className="flex flex-wrap justify-around">
             {books.length > 0 ? (
               books.map((book, index) => (
-                <div key={index} className="w-1/3 sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/4 mb-4">
+                <div
+                  key={index}
+                  className="w-1/3 sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/4 mb-4"
+                >
                   <BookCard book={book} />
                 </div>
               ))
+            ) : books.length === 0 ? (
+              <p>No results found.</p>
             ) : (
-              books.length === 0 ? (
-                <p>No results found.</p>
-              ) : (
-                <p>Loading...</p>
-              )
+              <p>Loading...</p>
             )}
           </div>
         </div>

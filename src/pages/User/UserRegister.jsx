@@ -14,7 +14,7 @@ const UserRegister = (props) => {
 
   const submit = async (data) => {
     axios
-      .post("http://10.1.124.13:3000/auth/register", data)
+      .post("http://192.168.1.12:3000/auth/register", data)
       .then((res) => {
         console.log(res);
         const tokenToSet = res.data ? res.data.token : "";
