@@ -66,10 +66,10 @@ const ChatFooter = ({ socket, selectedUser }) => {
     setMessage("");
   };
 
-  socket.on('send-msg', (data) => {
-    console.log('Received message on the frontend:', data);
-    // Update your chat window with the new message
-  });
+  // socket.on('send-msg', (data) => {
+  //   console.log('Received message on the frontend:', data);
+  //   // Update your chat window with the new message
+  // });
 
   // const handleSendMessage = async (e) => {
   //   e.preventDefault();
