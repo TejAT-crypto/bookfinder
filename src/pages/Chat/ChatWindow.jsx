@@ -19,7 +19,7 @@ const ChatWindow = ({ socket, selectedUser, messages }) => {
         try {
           const chatId = selectedUser.chatId;
           const response = await axios.get(
-            `http://192.168.1.12:3000/chat/messages/${chatId}`,
+            `http://localhost:3000/chat/messages/${chatId}`,
             {
               headers: {
                 "auth-token": sessionStorage.getItem("Token"),
@@ -59,6 +59,7 @@ const ChatWindow = ({ socket, selectedUser, messages }) => {
       const handleNewMessage = (newMessage) => {
         setChatMessages((prevMessages) => [...prevMessages, newMessage]);
       };
+      console.log(chatMessages)
 
       socket.on("send-msg", handleNewMessage);
 
@@ -67,6 +68,11 @@ const ChatWindow = ({ socket, selectedUser, messages }) => {
       };
     }
   }, [socket]);
+
+  useEffect(() => {
+    // This will log the chatMessages to the console whenever they change.
+    console.log("chatMessages:", chatMessages);
+  }, [chatMessages]); 
 
   // console.log("messages", chatMessages);
   const handleLeaveChat = () => {
@@ -117,9 +123,28 @@ const ChatWindow = ({ socket, selectedUser, messages }) => {
         )}
       </div> */}
       <div className="flex flex-1 flex-col justify-end px-4 overflow-scroll">
-        {chatMessages.map((message) => (
+      {chats.map((message) =>
+          message.user === sessionStorage.getItem("userId") ? (
+            <div className="text-sm" key={message.id}>
+              <p>{message.username}</p>
+              <div className="bg-green-300 max-w-300 p-4 rounded-md ml-auto text-base w-fit my-2 ml-auto">
+                <p>{message.message}</p>
+              </div>
+            </div>
+          ) : (
+            <div className="text-sm" key={message.id}>
+              <p>{message.username}</p>
+              <div className="bg-red-200 w-300 p-4 rounded-md text-base w-fit my-2">
+                <p>{message.message}</p>
+              </div>
+            </div>
+          )
+        )}
+        {chatMessages.map((message) => 
+        (
           <div className="text-sm" key={message.id}>
-            <p>{message.username}</p>
+            <p>{message.user}</p>
+            <p>{sessionStorage.getItem("userId")}</p>
             <div
               className={`${
                 message.user === sessionStorage.getItem("userId")

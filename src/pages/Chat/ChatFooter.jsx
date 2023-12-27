@@ -56,6 +56,7 @@ const ChatFooter = ({ socket, selectedUser }) => {
     if (message.trim() && sessionStorage.getItem("username")) {
 
       console.log("Sending message to backend:", message, "to chat ID:", selectedUser.chatId);
+      console.log(selectedUser)
       // Ensure you are emitting the correct data structure
       socket.emit("send-msg", {
         message: message,
@@ -66,10 +67,10 @@ const ChatFooter = ({ socket, selectedUser }) => {
     setMessage("");
   };
 
-  // socket.on('send-msg', (data) => {
-  //   console.log('Received message on the frontend:', data);
-  //   // Update your chat window with the new message
-  // });
+  socket.on('send-msg', (data) => {
+    console.log('Received message on the frontend:', data);
+    // Update your chat window with the new message
+  });
 
   // const handleSendMessage = async (e) => {
   //   e.preventDefault();
@@ -77,7 +78,7 @@ const ChatFooter = ({ socket, selectedUser }) => {
   //   if (message.trim() && sessionStorage.getItem("username") && selectedUser) {
   //     try {
   //       const response = await axios.post(
-  //         "http://192.168.1.12:3000/chat/sendMessage",
+  //         "http://localhost:3000/chat/sendMessage",
   //         {
   //           message: message,
   //           chatId: selectedUser.chatId,

@@ -30,7 +30,7 @@ const Profile = () => {
 
   const reverseGeocoding = async (latitude, longitude) => {
     const response = await fetch(
-      `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=a632785c704b458890f2dcc00463ea27`
+      `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=c3b00ecf40ec49aa9c4c6a0cd85629c1`
     );
     const data = await response.json();
     const results = data.results;
@@ -51,7 +51,7 @@ const Profile = () => {
 
   const addBook = (data) => {
     try {
-      axios.post("http://192.168.1.12:3000/book/add", data, {
+      axios.post("http://localhost:3000/book/add", data, {
         headers: {
           "auth-token": sessionStorage.getItem("Token"),
         },
@@ -64,7 +64,7 @@ const Profile = () => {
   const fetchUserDetails = async () => {
     try {
       const response = await axios.get(
-        "http://192.168.1.12:3000/profile/user",
+        "http://localhost:3000/profile/user",
         {
           headers: {
             "auth-token": sessionStorage.getItem("Token"),
@@ -86,7 +86,7 @@ const Profile = () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        "http://192.168.1.12:3000/book/uploads",
+        "http://localhost:3000/book/uploads",
         {
           headers: {
             "auth-token": sessionStorage.getItem("Token"),
@@ -105,7 +105,7 @@ const Profile = () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        "http://192.168.1.12:3000/book/activity",
+        "http://localhost:3000/book/activity",
         {
           headers: {
             "auth-token": sessionStorage.getItem("Token"),
@@ -141,7 +141,7 @@ const Profile = () => {
 
           try {
             const response = await axios.put(
-              "http://192.168.1.12:3000/profile/location",
+              "http://localhost:3000/profile/location",
               geoJson,
               {
                 headers: {

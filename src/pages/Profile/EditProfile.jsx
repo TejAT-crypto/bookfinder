@@ -17,7 +17,7 @@
 //         console.log(formData)
 
 //         // Make a POST request to /profile/upload-picture
-//         await axios.put('http://192.168.1.12:3000/profile/upload-picture', formData, {
+//         await axios.put('http://localhost:3000/profile/upload-picture', formData, {
 //           headers: {
 //             'Content-Type': 'multipart/form-data',
 //             'auth-token': sessionStorage.getItem('Token'),
@@ -26,7 +26,7 @@
 //         navigate("/profile")
 
 //         // // Fetch updated data after uploading
-//         // const updatedDataResponse = await axios.get('http://192.168.1.12:3000/profile/get-updated-data', {
+//         // const updatedDataResponse = await axios.get('http://localhost:3000/profile/get-updated-data', {
 //         //   headers: {
 //         //     'auth-token': sessionStorage.getItem('Token'),
 //         //   },
@@ -159,7 +159,7 @@ const BookForm = () => {
       console.log(formData);
       // Post form data to /book/add along with the base64 string
       const response = await axios.put(
-        "http://192.168.1.12:3000/profile/upload-picture",
+        "http://localhost:3000/profile/upload-picture",
         {
           ...formData,
           image: file,

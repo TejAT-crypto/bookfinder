@@ -11,7 +11,7 @@ const Listings = ({ socket }) => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get("http://192.168.1.12:3000/chat/", {
+        const response = await axios.get("http://localhost:3000/chat/", {
           headers: {
             "auth-token": sessionStorage.getItem("Token"),
           },
@@ -43,10 +43,10 @@ const Listings = ({ socket }) => {
 
   return (
     <div className={`h-full bg-[#FFF5E0] flex-1/5 pb-20 pl-20 pr-20 pt-5`}>
-      <div>
         <h4 className="mx-0 mb-20 mt-0">USERS</h4>
+        <div className="flex flex-col space-y-2">
         {users.map((user) => (
-          <button key={user.otherUser} onClick={() => setSelectedUser(user)}>
+          <button className="w-full bg-gray-100 border border-gray-300 p-2 rounded hover:bg-gray-200" key={user.otherUser} onClick={() => setSelectedUser(user)}>
             {user.otherUser}
           </button>
         ))}
@@ -86,7 +86,7 @@ export default Listings;
 //   useEffect(() => {
 //     const fetchUsers = async () => {
 //       try {
-//         const response = await axios.get("http://192.168.1.12:3000/chat/", {
+//         const response = await axios.get("http://localhost:3000/chat/", {
 //           headers: {
 //             "auth-token": sessionStorage.getItem("Token"),
 //           },
@@ -104,7 +104,7 @@ export default Listings;
 //   // const handleUserClick = async (chatData) => {
 //   //   // try {
 //   //   //   const bookId = chatData.bookId; // Extract the bookId from the response data
-//   //   //   const response = await axios.get(`http://192.168.1.12:3000/chat/messages/${bookId}`, {
+//   //   //   const response = await axios.get(`http://localhost:3000/chat/messages/${bookId}`, {
 //   //   //     headers: {
 //   //   //       'auth-token': sessionStorage.getItem('Token')
 //   //   //     }
@@ -125,7 +125,7 @@ export default Listings;
 //   //     const fetchData = async () => {
 //   //       try {
 //   //         const bookId = users.find(user => user.users[1] === selectedUser)?.bookId;
-//   //         const response = await axios.get(`http://192.168.1.12:3000/chat/messages/${bookId}`, {
+//   //         const response = await axios.get(`http://localhost:3000/chat/messages/${bookId}`, {
 //   //           headers: {
 //   //             'auth-token': sessionStorage.getItem('Token')
 //   //           }
@@ -207,7 +207,7 @@ export default Listings;
 //   useEffect(() => {
 //     const fetchUsers = async () => {
 //       try {
-//         const response = await axios.get('http://192.168.1.12:3000/chat/', {
+//         const response = await axios.get('http://localhost:3000/chat/', {
 //           headers: {
 //             'auth-token': sessionStorage.getItem('Token')
 //           }
@@ -233,7 +233,7 @@ export default Listings;
 //   //   console.log("selected user: ", typeof(userId.users[1]));
 //   //   console.log("user selected", selectedUser);
 //   //   try {
-//   //     const response =  axios.get(`http://192.168.1.12:3000/chat/messages`, {
+//   //     const response =  axios.get(`http://localhost:3000/chat/messages`, {
 //   //       headers: { 'auth-token': sessionStorage.getItem('Token') }
 //   //     });
 //   //     setChats({
@@ -253,7 +253,7 @@ export default Listings;
 //     // setCheck(1);
 
 //     try {
-//       const response = await axios.get(`http://192.168.1.12:3000/chat/messages`, {
+//       const response = await axios.get(`http://localhost:3000/chat/messages`, {
 //         headers: { 'auth-token': sessionStorage.getItem('Token') }
 //       });
 //       setChats({
@@ -338,7 +338,7 @@ const Listings = ({ socket }) => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get(' http://192.168.1.12:3000/chat/', {
+        const response = await axios.get(' http://localhost:3000/chat/', {
           headers: {
             'auth-token': sessionStorage.getItem('Token')
           }
@@ -356,7 +356,7 @@ const Listings = ({ socket }) => {
   const handleUserClick = async (userId) => {
     setSelectedUser(userId);
     try {
-      const response = await axios.get(`http://192.168.1.12:3000/chat/messages/${userId}`, {
+      const response = await axios.get(`http://localhost:3000/chat/messages/${userId}`, {
         headers: { 'auth-token': sessionStorage.getItem('Token') }
       });
       setChats({
@@ -421,7 +421,7 @@ const Listings = ({ socket }) => {
 
 //   const fetchUserListing = async () => {
 //     try {
-//       const response = await axios.get('http://192.168.1.12:3000/chat/', {
+//       const response = await axios.get('http://localhost:3000/chat/', {
 //         headers: {
 //           "auth-token": sessionStorage.getItem('Token')
 //         }

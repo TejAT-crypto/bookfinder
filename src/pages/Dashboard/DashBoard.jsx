@@ -18,7 +18,7 @@
 //   const getBooks = async () => {
 //     try {
 //       // Post form data to /book/add along with the base64 string
-//       const response = await axios.get("http://192.168.1.12:3000/book/", {
+//       const response = await axios.get("http://localhost:3000/book/", {
 //           headers: {
 //             'auth-token': sessionStorage.getItem('Token')
 //           }
@@ -94,7 +94,7 @@ const DashBoard = (props) => {
 
   const getBooks = async () => {
     try {
-      const response = await axios.get("http://192.168.1.12:3000/book/", {
+      const response = await axios.get("http://localhost:3000/book/", {
         headers: {
           "auth-token": sessionStorage.getItem("Token"),
         },
@@ -107,7 +107,7 @@ const DashBoard = (props) => {
 
           try {
             const response = await fetch(
-              `https://api.opencagedata.com/geocode/v1/json?q=${coordinates[1]}+${coordinates[0]}&key=a632785c704b458890f2dcc00463ea27`
+              `https://api.opencagedata.com/geocode/v1/json?q=${coordinates[1]}+${coordinates[0]}&key=c3b00ecf40ec49aa9c4c6a0cd85629c1`
             );
             const data = await response.json();
             const results = data.results;
@@ -134,7 +134,7 @@ const DashBoard = (props) => {
   const getBookStatus = async () => {
     try {
       const response = await axios.get(
-        "http://192.168.1.12:3000/chat/allChatRequests",
+        "http://localhost:3000/chat/allChatRequests",
         {
           headers: {
             "auth-token": sessionStorage.getItem("Token"),

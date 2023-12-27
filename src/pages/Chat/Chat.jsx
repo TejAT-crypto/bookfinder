@@ -20,13 +20,14 @@ const Chat = ({ socket }) => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get("http://192.168.1.12:3000/chat/", {
+        const response = await axios.get("http://localhost:3000/chat/", {
           headers: {
             "auth-token": sessionStorage.getItem("Token"),
           },
         });
         console.log(response.data);
-        setUsers(response.data);
+        
+        setUsers(response.data.chats);
       } catch (error) {
         console.error("Error fetching users:", error);
       }
@@ -51,6 +52,10 @@ const Chat = ({ socket }) => {
       };
     }
   }, [socket]);
+
+  useEffect(() => {
+    console.log("selectedUser", users);
+  },[users])
   /////////////////////////////////////////
 
   useEffect(() => {

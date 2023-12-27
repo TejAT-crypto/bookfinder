@@ -16,7 +16,7 @@
 //   const fetchActivity = async () => {
 //     try {
 //       const response = await axios.get(
-//         "http://192.168.1.12:3000/chat/allChatRequests",
+//         "http://localhost:3000/chat/allChatRequests",
 //         {
 //           headers: {
 //             "auth-token": sessionStorage.getItem("Token"),
@@ -37,7 +37,7 @@
 //     console.log("Result is: ", bookId);
 //     try {
 //       const response = await axios.post(
-//         "http://192.168.1.12:3000/chat/acceptRequest",
+//         "http://localhost:3000/chat/acceptRequest",
 //         {
 //           bookId: bookId,
 //         },
@@ -171,7 +171,7 @@ const Activity = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        "http://192.168.1.12:3000/chat/allChatRequests",
+        "http://localhost:3000/chat/allChatRequests",
         {
           headers: {
             "auth-token": sessionStorage.getItem("Token"),
@@ -194,7 +194,7 @@ const Activity = () => {
     console.log("BookId is: ", bookId);
     try {
       const response = await axios.post(
-        "http://192.168.1.12:3000/chat/acceptRequest",
+        "http://localhost:3000/chat/acceptRequest",
         {
           chatRequestId: id,
           bookId: bookId,
@@ -216,7 +216,7 @@ const Activity = () => {
     console.log("Id is: ", id);
     try {
       const response = await axios.delete(
-        "http://192.168.1.12:3000/chat/declineRequest",
+        "http://localhost:3000/chat/declineRequest",
         {
           data: {
             chatRequestId: id,

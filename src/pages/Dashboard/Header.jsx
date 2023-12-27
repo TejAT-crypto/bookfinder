@@ -21,7 +21,7 @@ const Header = ({ onSearch }) => {
   const fetchUserDetails = async () => {
     try {
       const response = await axios.get(
-        "http://192.168.1.12:3000/profile/user",
+        "http://localhost:3000/profile/user",
         {
           headers: {
             "auth-token": sessionStorage.getItem("Token"),

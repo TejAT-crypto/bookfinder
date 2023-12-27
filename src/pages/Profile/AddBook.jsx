@@ -23,7 +23,7 @@
 //     try {
 //       // Post form data to /book/add
 //       console.log(formData)
-//       const response = await axios.post("http://192.168.1.12:3000/book/add", formData);
+//       const response = await axios.post("http://localhost:3000/book/add", formData);
 //       console.log("Form submitted successfully:", response.data);
 //       navigate("/profile")
 //       // Optionally, you can handle a successful submission
@@ -183,7 +183,7 @@ const BookForm = () => {
       console.log(formData);
       // Post form data to /book/add along with the base64 string
       const response = await axios.post(
-        "http://192.168.1.12:3000/book/add",
+        "http://localhost:3000/book/add",
         {
           ...formData,
           image: file,

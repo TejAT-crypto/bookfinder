@@ -13,7 +13,7 @@ import AddBook from "./pages/Profile/AddBook";
 import EditProfile from "./pages/Profile/EditProfile";
 import socketIO from "socket.io-client";
 
-const socket = socketIO.connect("http://192.168.1.12:3000");
+const socket = socketIO.connect("http://localhost:3000");
 
 const App = () => {
   const [isSignedIn, setIsSignedIn] = React.useState(

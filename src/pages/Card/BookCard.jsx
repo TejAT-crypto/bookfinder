@@ -13,7 +13,7 @@ const BookCard = ({ book,bookIds }) => {
   const requestBook = async () => {
     try {
       const response = await axios.post(
-        "http://192.168.1.12:3000/chat/sendRequest",
+        "http://localhost:3000/chat/sendRequest",
         {
           bookId: book._id,
           otherUserId: book.userid,
@@ -35,7 +35,7 @@ const BookCard = ({ book,bookIds }) => {
   // const getBookStatus = async () => {
   //   try {
   //     const response = await axios.get(
-  //       "http://192.168.1.12:3000/chat/allChatRequests",
+  //       "http://localhost:3000/chat/allChatRequests",
   //       {
   //         headers: {
   //           "auth-token": sessionStorage.getItem("Token"),
@@ -67,7 +67,7 @@ const BookCard = ({ book,bookIds }) => {
       const { coordinates } = book.location;
 
       try {
-          const response = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${coordinates[1]}+${coordinates[0]}&key=a632785c704b458890f2dcc00463ea27`);
+          const response = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${coordinates[1]}+${coordinates[0]}&key=c3b00ecf40ec49aa9c4c6a0cd85629c1`);
           const data = await response.json();
           const results = data.results;
           console.log(results)
